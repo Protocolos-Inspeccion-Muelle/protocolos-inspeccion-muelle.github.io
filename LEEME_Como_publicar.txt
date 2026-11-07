@@ -1,0 +1,51 @@
+PROTOCOLOS MANTENIMIENTO – MUELLE
+Cómo publicarlos como página web (para usarlos en celular)
+=====================================================================
+
+Esta carpeta es un sitio web completo. Se abre desde index.html (menú con los 11 protocolos).
+Una vez publicada, se obtiene UN enlace https://... que funciona en cualquier celular (Chrome o
+Safari): se llena, se guarda en el teléfono y se genera el PDF.
+
+IMPORTANTE: el enlace queda accesible para cualquiera que lo tenga. Antes de publicar,
+confirme con su jefatura / TI que se pueden publicar TAG y datos del proyecto. Si no se permite,
+use una opción interna (SharePoint / servidor web de la compañía).
+
+
+OPCIÓN A – NETLIFY (la más rápida, ~5 minutos, gratis)
+---------------------------------------------------------------------
+1. En el PC, descomprima el .zip. Queda la carpeta "Protocolos_PEO_Muelle".
+2. Entre a https://app.netlify.com/drop
+3. Cree una cuenta gratis (con correo o Google). Sin cuenta, el sitio se borra a la hora.
+4. Arrastre la carpeta "Protocolos_PEO_Muelle" completa al recuadro de la página.
+5. Netlify entrega un enlace tipo https://nombre-aleatorio.netlify.app
+   - En "Site configuration" → "Change site name" puede cambiarlo, por ejemplo:
+     https://protocolos-muelle.netlify.app
+6. Abra el enlace en el celular. Al final del menú aparece un código QR para compartir.
+7. Para actualizar: en el sitio de Netlify → "Deploys" → arrastre de nuevo la carpeta corregida.
+   El enlace no cambia.
+
+
+OPCIÓN B – GITHUB PAGES (gratis, enlace estable)
+---------------------------------------------------------------------
+1. Cree una cuenta en https://github.com
+2. "New repository" → nombre: protocolos-muelle → Public → Create.
+3. "uploading an existing file" → arrastre TODO el contenido de la carpeta
+   (index.html y las 3 subcarpetas) → "Commit changes".
+4. Settings → Pages → Source: "Deploy from a branch" → Branch: main / (root) → Save.
+5. En 1–2 minutos el sitio queda en: https://SU-USUARIO.github.io/protocolos-muelle/
+
+
+OPCIÓN C – SHAREPOINT / SERVIDOR INTERNO
+---------------------------------------------------------------------
+SharePoint normalmente DESCARGA los .html en vez de mostrarlos, así que no sirve como sitio.
+Pida a TI publicar la carpeta en un servidor web interno (IIS, intranet) y le entregarán el enlace.
+
+
+USO EN EL CELULAR
+---------------------------------------------------------------------
+- Abrir el enlace en Chrome (Android) o Safari (iPhone). Si llega por WhatsApp o correo,
+  usar "Abrir en navegador".
+- Recomendado: "Agregar a pantalla de inicio" para tenerlo como ícono.
+- Los datos quedan guardados en ESE teléfono. Para continuar en otro equipo:
+  "Respaldo de datos" y luego "Cargar respaldo" en el otro equipo.
+- Informe: "Informe PDF / Imprimir" → "Guardar como PDF" (iPhone: Compartir → Guardar en Archivos).

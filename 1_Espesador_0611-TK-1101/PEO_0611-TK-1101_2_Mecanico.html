@@ -1,0 +1,688 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PEO 0611-TK-1101 – Mantenimiento Mecánico</title>
+<style>
+:root{--teal:#0b6e74;--orange:#e8772e;--ink:#1d2327;--mut:#5f6b73;--line:#cfd6db;--bg:#f3f5f6;--ok:#1f8a4c;--nc:#c62828;--na:#7a8790;--warn:#d38b00}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:var(--bg);font-size:14px}
+.wrap{max-width:1000px;margin:0 auto;padding:12px}
+.sheet{background:#fff;border:1px solid var(--line);padding:18px 20px;border-radius:6px}
+/* encabezado */
+.hdr{display:grid;grid-template-columns:170px 1fr 170px;border:1.5px solid var(--ink)}
+.hdr>div{padding:8px 10px;display:flex;flex-direction:column;justify-content:center}
+.hdr .logo{border-right:1.5px solid var(--ink)}
+.logo b{font-size:17px;letter-spacing:2px;color:var(--teal)}
+.logo small{font-size:9px;letter-spacing:1px;color:var(--mut)}
+.hdr .tit{text-align:center;font-weight:bold;font-size:15px;line-height:1.3}
+.hdr .tit span{display:block;font-size:12px;font-weight:normal;color:var(--mut);margin-top:3px}
+.hdr .tit span.esp{display:inline-block;margin-top:5px;background:var(--teal);color:#fff;font-weight:bold;font-size:12.5px;padding:3px 10px;border-radius:3px;letter-spacing:.5px}
+.hdr .cod{border-left:1.5px solid var(--ink);text-align:center;font-size:12px}
+.hdr .cod input{text-align:center;font-weight:bold}
+.bar{height:4px;background:var(--orange);margin:6px 0 14px}
+/* ficha */
+.ficha{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--ink);border-bottom:0;margin-bottom:14px}
+.ficha label{border-bottom:1px solid var(--ink);border-right:1px solid var(--line);padding:5px 7px;font-size:11px;color:var(--mut);display:flex;flex-direction:column;gap:2px}
+.ficha label.w2{grid-column:span 2}.ficha label.w4{grid-column:span 4}
+input,select,textarea{font:inherit;color:var(--ink);border:0;border-bottom:1px solid var(--line);background:transparent;padding:4px 2px;width:100%;border-radius:0}
+input:focus,textarea:focus,select:focus{outline:none;border-bottom:2px solid var(--teal);background:#eef7f7}
+.ficha input,.ficha select{font-size:14px;color:#0a2a6b}
+/* barra herramientas */
+.tools{position:sticky;top:0;z-index:10;background:var(--teal);color:#fff;display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px 10px;border-radius:6px;margin-bottom:10px}
+.tools button{background:#fff;color:var(--teal);border:0;border-radius:4px;padding:8px 12px;font-weight:bold;font-size:13px;cursor:pointer}
+.tools button.pri{background:var(--orange);color:#fff}
+.tools .prog{margin-left:auto;font-size:12px}
+.tools input[type=file]{display:none}
+/* resumen */
+.res{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:14px}
+.res div{border:1px solid var(--line);border-left:4px solid var(--teal);padding:6px 8px;font-size:11px}
+.res b{display:block;font-size:13px}
+.res .bar2{height:5px;background:#e3e8ea;margin-top:4px}
+.res .bar2 i{display:block;height:100%;background:var(--teal)}
+/* secciones */
+.sec{margin-bottom:16px}
+.sec h2{margin:0;background:var(--ink);color:#fff;font-size:13px;padding:7px 10px;display:flex;justify-content:space-between;align-items:center}
+.sec h2 small{font-weight:normal;font-size:11px;opacity:.85;margin-left:auto;padding-left:10px;text-align:right}
+.sec h2{justify-content:flex-start!important}.sec h2 .num{margin-right:5px}
+.sub{background:#dfe7ea;font-weight:bold;font-size:12px;padding:5px 10px;border:1px solid var(--line);border-top:0}
+table{border-collapse:collapse;width:100%}
+.chk td,.chk th{border:1px solid var(--line);padding:5px 6px;vertical-align:top}
+.chk th{background:#eef1f3;font-size:11px;text-align:center}
+.chk td.n{width:38px;text-align:center;font-size:12px;color:var(--mut)}
+.chk td.it{font-size:13px}
+.chk td.it small{display:block;color:var(--mut);font-size:11px;margin-top:2px}
+.rf{display:inline-block;margin-top:3px;font-size:9.5px;color:var(--teal);border:1px solid #b9d6d8;border-radius:3px;padding:0 4px;background:#f1f8f8}
+.chk td.st{width:150px;white-space:nowrap;text-align:center}
+.chk td.ob{width:30%}
+.st button{border:1px solid var(--line);background:#fff;border-radius:4px;padding:7px 0;width:44px;font-size:11px;font-weight:bold;color:var(--mut);cursor:pointer}
+.st button.on[data-v=OK]{background:var(--ok);border-color:var(--ok);color:#fff}
+.st button.on[data-v=NC]{background:var(--nc);border-color:var(--nc);color:#fff}
+.st button.on[data-v=NA]{background:var(--na);border-color:var(--na);color:#fff}
+tr.isNC td{background:#fdecec}
+.ob input{font-size:12px}
+/* tablas de mediciones */
+.med td,.med th{border:1px solid var(--line);padding:3px 4px;font-size:11px;text-align:center}
+.med th{background:#eef1f3}
+.med td:first-child{text-align:left;font-size:11.5px}
+#tvib td:first-child,#tter td:first-child,#tele td:first-child{min-width:190px}
+#tseg td:first-child{min-width:260px}#tcal td:first-child{min-width:220px}#tcal td:first-child input{text-align:left}#tseg td:first-child input,#tseg td:nth-child(4) input{text-align:left}
+#tvib td:first-child input,#tter td:first-child input,#tele td:first-child input{text-align:left}
+.med input{text-align:center;font-size:12px;padding:5px 1px}
+.z{font-weight:bold;font-size:11px;border-radius:3px;padding:3px 4px;display:inline-block;min-width:22px}
+.zA{background:#d6f0df;color:var(--ok)}.zB{background:#e6f2c9;color:#4f7a00}.zC{background:#fff0c2;color:#9a6a00}.zD{background:#fbd5d5;color:var(--nc)}
+.ref{font-size:10.5px;color:var(--mut);padding:5px 8px;border:1px solid var(--line);border-top:0;background:#fafbfb}
+.gltab td,.gltab th{text-align:left!important;font-size:11px;vertical-align:top}.gltab td b{white-space:nowrap}
+.gl{break-inside:avoid}
+.mx th{font-size:9.5px;line-height:1.15}.mx select.mxs{text-align:center;font-weight:bold;font-size:15px;text-align-last:center}#ttab td:first-child,#tccm td:first-child,#tins td:first-child,#tvlv td:first-child{min-width:170px}#tins td:first-child input,#tvlv td:first-child input,#tins td:nth-last-child(2) input,#tvlv td:nth-last-child(2) input{text-align:left}#tins td:nth-last-child(2),#tvlv td:nth-last-child(2){width:20%}#ttab td:first-child input,#tccm td:first-child input,#ttab td:last-child input,#tccm td:nth-last-child(2) input{text-align:left}
+.addrow{margin:6px 0 0;border:1px dashed var(--teal);background:#fff;color:var(--teal);padding:6px 10px;border-radius:4px;font-size:12px;cursor:pointer}
+.del{border:0;background:none;color:var(--nc);font-size:15px;cursor:pointer}
+textarea{border:1px solid var(--line);min-height:70px;padding:6px}
+/* firmas */
+.firmas{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--ink);border-right:0;border-bottom:0}
+.firmas>div{border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:7px 8px;font-size:11px}
+.firmas b{display:block;font-size:11.5px;margin-bottom:3px;color:var(--teal)}
+.firmas .fl{height:42px;border-bottom:1px solid var(--ink);margin:6px 0 2px;display:flex;align-items:flex-end;justify-content:center}
+.firmas .fl canvas{width:100%;height:42px;touch-action:none;cursor:crosshair}
+.firmas .lbl{display:flex;justify-content:space-between;color:var(--mut);font-size:10px}
+.firmas .lbl a{color:var(--nc);cursor:pointer}
+.foot{font-size:10px;color:var(--mut);display:flex;justify-content:space-between;margin-top:12px;border-top:1px solid var(--line);padding-top:5px}
+.dict{display:flex;gap:10px;flex-wrap:wrap;align-items:center;border:1px solid var(--ink);padding:8px 10px;margin-bottom:10px}
+.dict label{display:flex;gap:5px;align-items:center;font-weight:bold;font-size:13px}
+.dict input{width:auto}
+@media (max-width:700px){
+  .hdr{grid-template-columns:1fr}.hdr .logo,.hdr .cod{border:0}
+  .ficha{grid-template-columns:1fr 1fr}.ficha label.w4{grid-column:span 2}
+  .chk td.ob{display:block;width:auto;border-top:0}
+  .chk tr{display:grid;grid-template-columns:38px 1fr}
+  .chk td.st{grid-column:2;text-align:left}
+  .chk td.ob{grid-column:2}
+  .chk thead{display:none}
+  .firmas{grid-template-columns:1fr 1fr}
+  .med{display:block;overflow-x:auto}
+}
+@media print{
+  @page{size:A4 portrait;margin:11mm 10mm}
+  body{background:#fff;font-size:10.5px}
+  .wrap{max-width:none;padding:0}.sheet{border:0;padding:0}
+  .tools,.addrow,.del,.noprint,.firmas .lbl a{display:none!important}
+  input,select,textarea{border-bottom:0;padding:1px;font-size:10.5px}
+  textarea{border:1px solid var(--line);min-height:40px}
+  .st button{display:none;width:auto;padding:2px 6px;font-size:9.5px}
+  .st button.on{display:inline-block}
+  .st .blank{display:inline-block!important}
+  .chk td,.chk th{padding:2px 4px}.chk td.it{font-size:10px}.chk td.it small{font-size:8.5px}.rf{font-size:7.5px;padding:0 3px;margin-top:1px}
+  .chk td.st{width:70px}
+  .sec{break-inside:auto}.sec h2,.sub{break-after:avoid}
+  tr{break-inside:avoid}
+  .firmas,.dict{break-inside:avoid}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  ::placeholder{color:transparent!important}
+  input::-webkit-calendar-picker-indicator{display:none}
+  select{-webkit-appearance:none;appearance:none}
+  .med td,.med th{font-size:8.5px;padding:1px 2px}.med input,.med select{font-size:9px;padding:2px 0}
+  #tvib td:first-child,#tter td:first-child,#tele td:first-child{min-width:0;width:27%}
+  #tseg td:first-child{min-width:0;width:50%}
+  .med td:first-child{font-size:8.5px}
+  .vacio{color:transparent!important}
+  .mx select.mxs{font-size:10px}.mx th{font-size:7.5px}.mx td:nth-last-child(2) input{font-size:7.5px}
+  .ficha label{padding:3px 6px}
+}
+.st .blank{display:none;color:var(--line)}
+</style>
+</head>
+<body>
+<div id="avisoJS" class="noprint" style="background: rgb(198, 40, 40); color: rgb(255, 255, 255); padding: 14px; font: 15px / 1.45 Arial, sans-serif;">⚠ <b>Está viendo una vista previa sin funciones</b> (visor del .zip, del correo o de archivos). En esta vista no se puede llenar, guardar ni imprimir.<br><b>Solución:</b> extraiga / descargue el archivo y ábralo en <b>Chrome</b> (Android / PC) o <b>Safari</b> (iPhone / iPad).</div>
+<div id="avisoNav" class="noprint" style="display:none;background:#c62828;color:#fff;padding:12px 14px;font:14px/1.4 Arial,sans-serif;position:sticky;top:0;z-index:99"></div>
+<script>
+(function(){var aj=document.getElementById('avisoJS');if(aj)aj.style.display='none';var m=[],ua=navigator.userAgent||'';
+var ok=true;try{var k='__t'+Date.now();localStorage.setItem(k,'1');localStorage.removeItem(k)}catch(e){ok=false}
+var inapp=/WhatsApp|FBAN|FBAV|Instagram|Line\/|Teams|Outlook|OneDrive|GSA\/|wv\)|; wv|Telegram|Gmail/i.test(ua);
+if(!ok)m.push('Este visor <b>no permite guardar</b> los datos.');
+if(inapp)m.push('El archivo está abierto <b>dentro de una aplicación</b> (WhatsApp, correo, Teams, OneDrive o visor de archivos). Ahí no funcionan bien el guardado ni la impresión.');
+if(m.length){var d=document.getElementById('avisoNav');d.innerHTML='⚠ '+m.join(' ')+'<br><b>Solución:</b> descargue el archivo y ábralo en <b>Chrome</b> (Android / PC) o <b>Safari</b> (iPhone / iPad). Use el menú ⋮ o el botón Compartir → <b>“Abrir en Chrome / Abrir en Safari”</b>.';d.style.display='block'}
+var p=window.print;window.print=function(){try{if(typeof p!=='function')throw 0;p.call(window)}catch(e){alert('Este visor no permite imprimir. Abra el archivo en Chrome o Safari y use «Informe PDF / Imprimir» → «Guardar como PDF».')}};
+})();
+</script>
+<div class="wrap">
+<div class="tools noprint"><a href="../index.html" style="background:#fff;color:#0b6e74;border-radius:4px;padding:8px 11px;font-weight:bold;font-size:13px;text-decoration:none">☰ Menú</a>
+  <button class="pri" onclick="imprimir()" title="Genera el informe: elegir impresora o «Guardar como PDF»">📄 Informe PDF / Imprimir</button>
+  <button onclick="exportar()" title="Archivo de respaldo para continuar en otro equipo (no es el informe)">💾 Respaldo de datos</button>
+  <button onclick="document.getElementById('imp').click()" title="Cargar un respaldo de datos (.json)">📂 Cargar respaldo</button>
+  <input type="file" id="imp" accept=".json" onchange="importar(this)">
+  <button onclick="limpiar()">🗑 Nuevo / Limpiar</button>
+  <span class="prog" id="prog">Mantenimiento Mecánico: avance 0/47 · 0 no conformes · guardado automático en este dispositivo</span>
+</div>
+
+<div class="sheet">
+  <div class="hdr">
+    <div class="logo"><b>CENTINELA</b><small>MANTENIMIENTO MECÁNICO – MUELLE</small></div>
+    <div class="tit">PROTOCOLO DE PUESTA EN OPERACIÓN<br>ESPESADOR DE CONCENTRADO 0611-TK-1101<span class="esp">Mantenimiento Mecánico</span></div>
+    <div class="cod">N° Protocolo<input data-k="codigo" placeholder="PPO-0611-TK-1101-MEC-01"></div>
+  </div>
+  <div class="bar"></div>
+
+  <div class="ficha">
+    <label class="w2">Proyecto<input data-k="proyecto" value="Nueva Centinela Muelle (EPC-007)"></label>
+    <label class="w2">Área<input data-k="area" value="0611 – Espesamiento de concentrado"></label>
+    <label>Equipo / TAG<input data-k="tag" value="0611-TK-1101"></label>
+    <label>N° OT / Aviso<input data-k="ot"></label>
+    <label>Fecha<input type="date" data-k="fecha"></label>
+    <label>Turno<select data-k="turno"><option></option><option>Día</option><option>Noche</option></select></label>
+    <label>Hora inicio<input type="time" data-k="hini"></label>
+    <label>Hora término<input type="time" data-k="hfin"></label>
+    <label class="w2">Tipo de prueba<select data-k="tipo"><option></option><option>Pre-arranque (sin carga)</option><option>Arranque con carga (primer ciclo)</option><option>Puesta en operación continua</option><option>Re-arranque post mantención</option></select></label>
+    <label class="w2">Horómetro inicial / N° ciclos contador<input data-k="horometro"></label>
+    <label class="w2">Responsable de la prueba<input data-k="resp"></label>
+    <label class="w4">Equipos asociados<textarea data-k="asociados" rows="2" style="border:0;border-bottom:1px solid var(--line);min-height:0;padding:3px 2px;color:#0a2a6b;resize:vertical">0611-TM-1101 · 0611-HP-1101 · 0611-DB-1101/1102 · 0611-SN-1101 · 0611-PP-1101/1102 · 0611-PP-1103 · 0611-TK-1102 · 0611-PP-1104/1105/1106 · 0611-PP-1128 · 0611-TK-1103</textarea></label>
+  </div>
+
+  <div class="ref" style="border-top:1px solid var(--line);margin:-6px 0 12px"><b>Documentos de referencia:</b> IOMS Metso High Rate Thickener HRT-036 (1002-03-ID-EPC-007-0611-IV-MA-50001 R2 / OU500915472) · Filosofía de Operación Espesamiento 1002-03-ID-EPC-007-0611-T-FI-00001 Rev.2 · Filosofía de Control Espesamiento 1002-03-ID-EPC-007-0611-I-FI-00001 Rev.2 · IOMS Metso Orion HR100 TPU-S C4 TRB (0611-PP-1101/1102) · Manual SmartDiver® AL-6410 (1002-03-ID-EPC-007-0611-MV-MA-50001).</div>
+  <div class="res" id="res"><div><b>Estanque, rastras y feedwell</b>0/14 verificados<div class="bar2"><i style="width:0%"></i></div></div><div><b>Accionamiento de rastra</b>0/5 verificados<div class="bar2"><i style="width:0%"></i></div></div><div><b>Levante de rastras (Mega, 300 mm)</b>0/6 verificados<div class="bar2"><i style="width:0%"></i></div></div><div><b>Unidad hidráulica 0611-HP-1101</b>0/9 verificados<div class="bar2"><i style="width:0%"></i></div></div><div><b>Bombas de descarga 0611-PP-1101/1102 (Metso Orion HR100)</b>0/10 verificados<div class="bar2"><i style="width:0%"></i></div></div><div><b>Bombas auxiliares</b>0/3 verificados<div class="bar2"><i style="width:0%"></i></div></div></div>
+  <div id="secs"><div class="sec"><h2>1. CHECK LIST – MANTENIMIENTO MECÁNICO<small>IOMS Metso HRT-036 + IOMS Orion HR100</small></h2><table class="chk"><thead><tr><th>N°</th><th>Ítem de verificación</th><th>Estado</th><th>Observación</th></tr></thead><tbody><tr><td colspan="4" class="sub">1.A Estanque, rastras y feedwell</td></tr><tr id="r_me1" class=""><td class="n">1.1</td><td class="it">Sitio despejado; pasillos libres, en especial alrededor del mecanismo<span class="rf">IOMS 6.2.1</span></td>
+    <td class="st"><button data-id="me1" data-v="OK" class="">SI</button> <button data-id="me1" data-v="NC" class="">NO</button> <button data-id="me1" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me1" value=""></td></tr><tr id="r_me2" class=""><td class="n">1.2</td><td class="it">Piso sin puntos altos que choquen con las rastras<span class="rf">IOMS 6.2.1</span></td>
+    <td class="st"><button data-id="me2" data-v="OK" class="">SI</button> <button data-id="me2" data-v="NC" class="">NO</button> <button data-id="me2" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me2" value=""></td></tr><tr id="r_me3" class=""><td class="n">1.3</td><td class="it">Nivel de los brazos de rastra verificado (2 cortos y 2 largos)<span class="rf">IOMS 6.2.1 / 2.5.5</span></td>
+    <td class="st"><button data-id="me3" data-v="OK" class="">SI</button> <button data-id="me3" data-v="NC" class="">NO</button> <button data-id="me3" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me3" value=""></td></tr><tr id="r_me4" class=""><td class="n">1.4</td><td class="it">Verticalidad del eje de accionamiento verificada<span class="rf">IOMS 6.2.1</span></td>
+    <td class="st"><button data-id="me4" data-v="OK" class="">SI</button> <button data-id="me4" data-v="NC" class="">NO</button> <button data-id="me4" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me4" value=""></td></tr><tr id="r_me5" class=""><td class="n">1.5</td><td class="it">Pernos de ensamble con torque según planos (rastras, puente, accionamiento, placa de torque)<span class="rf">IOMS 6.2.1 / 8.6.3</span></td>
+    <td class="st"><button data-id="me5" data-v="OK" class="">SI</button> <button data-id="me5" data-v="NC" class="">NO</button> <button data-id="me5" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me5" value=""></td></tr><tr id="r_me6" class=""><td class="n">1.6</td><td class="it">Holguras de brazos, aspas y raspadores de ambos conos según plano<span class="rf">IOMS 8.8.10</span></td>
+    <td class="st"><button data-id="me6" data-v="OK" class="">SI</button> <button data-id="me6" data-v="NC" class="">NO</button> <button data-id="me6" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me6" value=""></td></tr><tr id="r_me7" class=""><td class="n">1.7</td><td class="it">Rastra 1 vuelta hacia adelante sin tocar nada (aspas, raspadores del cono de descarga y del cono deflector)<span class="rf">IOMS 6.2.2.3</span></td>
+    <td class="st"><button data-id="me7" data-v="OK" class="">SI</button> <button data-id="me7" data-v="NC" class="">NO</button> <button data-id="me7" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me7" value=""></td></tr><tr id="r_me8" class=""><td class="n">1.8</td><td class="it">Prueba en seco de la rastra ≥ 8 h con temperatura de reductor y aceite registrada cada hora; prueba corta en reversa<small>Registrar en sección MonCon</small><span class="rf">IOMS 6.2.2.3</span></td>
+    <td class="st"><button data-id="me8" data-v="OK" class="">SI</button> <button data-id="me8" data-v="NC" class="">NO</button> <button data-id="me8" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me8" value=""></td></tr><tr id="r_me9" class=""><td class="n">1.9</td><td class="it">Llenado con agua sin rastra y sin fugas; estanque lleno 24 h e inspeccionado<span class="rf">IOMS 6.2.3</span></td>
+    <td class="st"><button data-id="me9" data-v="OK" class="">SI</button> <button data-id="me9" data-v="NC" class="">NO</button> <button data-id="me9" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me9" value=""></td></tr><tr id="r_me10" class=""><td class="n">1.10</td><td class="it">Rastra con agua por varias horas sin desalineamiento, sobrecalentamiento ni ruido anormal<span class="rf">IOMS 6.2.3</span></td>
+    <td class="st"><button data-id="me10" data-v="OK" class="">SI</button> <button data-id="me10" data-v="NC" class="">NO</button> <button data-id="me10" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me10" value=""></td></tr><tr id="r_me11" class=""><td class="n">1.11</td><td class="it">Feedwell Reactorwell™: cono deflector (gap 100 mm) y 8 puertos Autodil™ libres<span class="rf">IOMS 2.5.8</span></td>
+    <td class="st"><button data-id="me11" data-v="OK" class="">SI</button> <button data-id="me11" data-v="NC" class="">NO</button> <button data-id="me11" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me11" value=""></td></tr><tr id="r_me12" class=""><td class="n">1.12</td><td class="it">Descanso sumergido (Ø200) y booms de espuma apernados<span class="rf">IOMS 8.8.10</span></td>
+    <td class="st"><button data-id="me12" data-v="OK" class="">SI</button> <button data-id="me12" data-v="NC" class="">NO</button> <button data-id="me12" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me12" value=""></td></tr><tr id="r_me13" class=""><td class="n">1.13</td><td class="it">Estanque DA sin fugas en bridas; dardo manual opera<span class="rf">IOMS 8.4.6</span></td>
+    <td class="st"><button data-id="me13" data-v="OK" class="">SI</button> <button data-id="me13" data-v="NC" class="">NO</button> <button data-id="me13" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me13" value=""></td></tr><tr id="r_me14" class=""><td class="n">1.14</td><td class="it">Sprays de espuma: Y-strainer limpio, boquillas sin obstrucción, cable de seguridad instalado<span class="rf">IOMS 8.4.7</span></td>
+    <td class="st"><button data-id="me14" data-v="OK" class="">SI</button> <button data-id="me14" data-v="NC" class="">NO</button> <button data-id="me14" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me14" value=""></td></tr><tr><td colspan="4" class="sub">1.B Accionamiento de rastra</td></tr><tr id="r_me15" class=""><td class="n">1.15</td><td class="it">Reductor Bonfiglioli 321 L4 lleno de aceite (esperar 10 min y rellenar); nivel visible en el canister de 6,5 L<span class="rf">IOMS 5.4.1 / 8.10</span></td>
+    <td class="st"><button data-id="me15" data-v="OK" class="">SI</button> <button data-id="me15" data-v="NC" class="">NO</button> <button data-id="me15" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me15" value=""></td></tr><tr id="r_me16" class=""><td class="n">1.16</td><td class="it">Reductor sin fugas por sellos, tapones ni carcasa; limpio; guardas instaladas<span class="rf">IOMS 8.4.3</span></td>
+    <td class="st"><button data-id="me16" data-v="OK" class="">SI</button> <button data-id="me16" data-v="NC" class="">NO</button> <button data-id="me16" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me16" value=""></td></tr><tr id="r_me17" class=""><td class="n">1.17</td><td class="it">Motor hidráulico GM03 350 y mangueras sin fugas ni daños<span class="rf">IOMS 7.5.3.5</span></td>
+    <td class="st"><button data-id="me17" data-v="OK" class="">SI</button> <button data-id="me17" data-v="NC" class="">NO</button> <button data-id="me17" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me17" value=""></td></tr><tr id="r_me18" class=""><td class="n">1.18</td><td class="it">Corona de giro con grasa (380 ml de fábrica) y línea purgada (~100 ml)<span class="rf">IOMS 5.4.1</span></td>
+    <td class="st"><button data-id="me18" data-v="OK" class="">SI</button> <button data-id="me18" data-v="NC" class="">NO</button> <button data-id="me18" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me18" value=""></td></tr><tr id="r_me19" class=""><td class="n">1.19</td><td class="it">Lubricador automático SKF activado: período 12 meses, fecha anotada, LED verde<span class="rf">IOMS 5.4.1 / 8.4.4</span></td>
+    <td class="st"><button data-id="me19" data-v="OK" class="">SI</button> <button data-id="me19" data-v="NC" class="">NO</button> <button data-id="me19" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me19" value=""></td></tr><tr><td colspan="4" class="sub">1.C Levante de rastras (Mega, 300 mm)</td></tr><tr id="r_me20" class=""><td class="n">1.20</td><td class="it">Placas guía del levante engrasadas (grasa de uso general)<span class="rf">IOMS 5.4.1 / 8.4.5</span></td>
+    <td class="st"><button data-id="me20" data-v="OK" class="">SI</button> <button data-id="me20" data-v="NC" class="">NO</button> <button data-id="me20" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me20" value=""></td></tr><tr id="r_me21" class=""><td class="n">1.21</td><td class="it">Cilindros de levante sin fugas en sellos; todos se mueven en la misma dirección<span class="rf">IOMS 6.2.1.1</span></td>
+    <td class="st"><button data-id="me21" data-v="OK" class="">SI</button> <button data-id="me21" data-v="NC" class="">NO</button> <button data-id="me21" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me21" value=""></td></tr><tr id="r_me22" class=""><td class="n">1.22</td><td class="it">Mangueras no se pellizcan ni se tensan al levantar; nada choca al levantar<span class="rf">IOMS 6.2.1.1</span></td>
+    <td class="st"><button data-id="me22" data-v="OK" class="">SI</button> <button data-id="me22" data-v="NC" class="">NO</button> <button data-id="me22" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me22" value=""></td></tr><tr id="r_me23" class=""><td class="n">1.23</td><td class="it">Levante en pasos de 50 mm con 1 min de espera hasta 300 mm; el mecanismo sube nivelado y no deriva<span class="rf">IOMS 6.2.2.4</span></td>
+    <td class="st"><button data-id="me23" data-v="OK" class="">SI</button> <button data-id="me23" data-v="NC" class="">NO</button> <button data-id="me23" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me23" value=""></td></tr><tr id="r_me24" class=""><td class="n">1.24</td><td class="it">Bajada de 300 mm en ~1 min; en AUTO baja 2 s cada 2 min<span class="rf">IOMS 6.2.2.4</span></td>
+    <td class="st"><button data-id="me24" data-v="OK" class="">SI</button> <button data-id="me24" data-v="NC" class="">NO</button> <button data-id="me24" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me24" value=""></td></tr><tr id="r_me25" class=""><td class="n">1.25</td><td class="it">Con las rastras en la altura máxima y girando, no tocan ninguna parte del espesador<span class="rf">IOMS 6.2.2.4</span></td>
+    <td class="st"><button data-id="me25" data-v="OK" class="">SI</button> <button data-id="me25" data-v="NC" class="">NO</button> <button data-id="me25" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me25" value=""></td></tr><tr><td colspan="4" class="sub">1.D Unidad hidráulica 0611-HP-1101</td></tr><tr id="r_me26" class=""><td class="n">1.26</td><td class="it">Instalación según esquema hidráulico; FAT y checklists de la HPU completos<span class="rf">IOMS 6.2.1</span></td>
+    <td class="st"><button data-id="me26" data-v="OK" class="">SI</button> <button data-id="me26" data-v="NC" class="">NO</button> <button data-id="me26" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me26" value=""></td></tr><tr id="r_me27" class=""><td class="n">1.27</td><td class="it">Nivel de aceite ≥ 2/3 del visor con los cilindros retraídos<span class="rf">IOMS 8.4.2</span></td>
+    <td class="st"><button data-id="me27" data-v="OK" class="">SI</button> <button data-id="me27" data-v="NC" class="">NO</button> <button data-id="me27" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me27" value=""></td></tr><tr id="r_me28" class=""><td class="n">1.28</td><td class="it">Conexiones apretadas y válvula de succión de la bomba abierta<span class="rf">IOMS 6.2.1.1</span></td>
+    <td class="st"><button data-id="me28" data-v="OK" class="">SI</button> <button data-id="me28" data-v="NC" class="">NO</button> <button data-id="me28" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me28" value=""></td></tr><tr id="r_me29" class=""><td class="n">1.29</td><td class="it">Sentido de giro del motor correcto (polaridad)<span class="rf">IOMS 6.2.2.1</span></td>
+    <td class="st"><button data-id="me29" data-v="OK" class="">SI</button> <button data-id="me29" data-v="NC" class="">NO</button> <button data-id="me29" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me29" value=""></td></tr><tr id="r_me30" class=""><td class="n">1.30</td><td class="it">HPU 1 h en marcha controlando presiones y temperatura, sin fugas<span class="rf">IOMS 6.2.2.1</span></td>
+    <td class="st"><button data-id="me30" data-v="OK" class="">SI</button> <button data-id="me30" data-v="NC" class="">NO</button> <button data-id="me30" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me30" value=""></td></tr><tr id="r_me31" class=""><td class="n">1.31</td><td class="it">Indicador de filtro de retorno OK; respiradero limpio; bandeja de goteo limpia<span class="rf">IOMS 8.4.2</span></td>
+    <td class="st"><button data-id="me31" data-v="OK" class="">SI</button> <button data-id="me31" data-v="NC" class="">NO</button> <button data-id="me31" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me31" value=""></td></tr><tr id="r_me32" class=""><td class="n">1.32</td><td class="it">Ventilador del enfriador sin obstrucciones<span class="rf">IOMS 7.5.3.4</span></td>
+    <td class="st"><button data-id="me32" data-v="OK" class="">SI</button> <button data-id="me32" data-v="NC" class="">NO</button> <button data-id="me32" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me32" value=""></td></tr><tr id="r_me33" class=""><td class="n">1.33</td><td class="it">Tapas antimanipulación de las válvulas de alivio intactas<span class="rf">IOMS 8.4.2</span></td>
+    <td class="st"><button data-id="me33" data-v="OK" class="">SI</button> <button data-id="me33" data-v="NC" class="">NO</button> <button data-id="me33" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me33" value=""></td></tr><tr id="r_me34" class=""><td class="n">1.34</td><td class="it">Elementos de filtro de aceite de repuesto en terreno<span class="rf">IOMS 6.2.1.1</span></td>
+    <td class="st"><button data-id="me34" data-v="OK" class="">SI</button> <button data-id="me34" data-v="NC" class="">NO</button> <button data-id="me34" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me34" value=""></td></tr><tr><td colspan="4" class="sub">1.E Bombas de descarga 0611-PP-1101/1102 (Metso Orion HR100)</td></tr><tr id="r_me35" class=""><td class="n">1.35</td><td class="it">Carcasa y tuberías limpias de residuos antes de conectar<span class="rf">HR100 6.1</span></td>
+    <td class="st"><button data-id="me35" data-v="OK" class="">SI</button> <button data-id="me35" data-v="NC" class="">NO</button> <button data-id="me35" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me35" value=""></td></tr><tr id="r_me36" class=""><td class="n">1.36</td><td class="it">Pernos de fundación y del cilindro de cojinete con torque<span class="rf">HR100 6.1</span></td>
+    <td class="st"><button data-id="me36" data-v="OK" class="">SI</button> <button data-id="me36" data-v="NC" class="">NO</button> <button data-id="me36" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me36" value=""></td></tr><tr id="r_me37" class=""><td class="n">1.37</td><td class="it">Conjunto giratorio gira libre a mano<span class="rf">HR100 6.1</span></td>
+    <td class="st"><button data-id="me37" data-v="OK" class="">SI</button> <button data-id="me37" data-v="NC" class="">NO</button> <button data-id="me37" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me37" value=""></td></tr><tr id="r_me38" class=""><td class="n">1.38</td><td class="it">Sentido de giro correcto<small>En reversa el impulsor puede desenroscarse</small><span class="rf">HR100 6.1</span></td>
+    <td class="st"><button data-id="me38" data-v="OK" class="">SI</button> <button data-id="me38" data-v="NC" class="">NO</button> <button data-id="me38" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me38" value=""></td></tr><tr id="r_me39" class=""><td class="n">1.39</td><td class="it">Rodamientos lubricados (SKF LGMT3 o equivalente)<small>No reengrasar en las primeras 8 h</small><span class="rf">HR100 8.4</span></td>
+    <td class="st"><button data-id="me39" data-v="OK" class="">SI</button> <button data-id="me39" data-v="NC" class="">NO</button> <button data-id="me39" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me39" value=""></td></tr><tr id="r_me40" class=""><td class="n">1.40</td><td class="it">Transmisión 3 × 5VX850: tensión de correas y alineamiento de poleas (3GR-5V-11,3" / 10,9")<span class="rf">HR100 Esp.</span></td>
+    <td class="st"><button data-id="me40" data-v="OK" class="">SI</button> <button data-id="me40" data-v="NC" class="">NO</button> <button data-id="me40" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me40" value=""></td></tr><tr id="r_me41" class=""><td class="n">1.41</td><td class="it">Guardas instaladas; zona del prensaestopas limpia<span class="rf">HR100 6.1</span></td>
+    <td class="st"><button data-id="me41" data-v="OK" class="">SI</button> <button data-id="me41" data-v="NC" class="">NO</button> <button data-id="me41" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me41" value=""></td></tr><tr id="r_me42" class=""><td class="n">1.42</td><td class="it">Sin fugas en conexiones de entrada y salida<span class="rf">HR100 7.1</span></td>
+    <td class="st"><button data-id="me42" data-v="OK" class="">SI</button> <button data-id="me42" data-v="NC" class="">NO</button> <button data-id="me42" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me42" value=""></td></tr><tr id="r_me43" class=""><td class="n">1.43</td><td class="it">Prensaestopas con fuga controlada y agua de sello correcta<span class="rf">HR100 7.3</span></td>
+    <td class="st"><button data-id="me43" data-v="OK" class="">SI</button> <button data-id="me43" data-v="NC" class="">NO</button> <button data-id="me43" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me43" value=""></td></tr><tr id="r_me44" class=""><td class="n">1.44</td><td class="it">Válvulas de cuchilla de spigot (HV-16326/16327) y de descarga operan libres<span class="rf">Ctrl 7.1.1.2</span></td>
+    <td class="st"><button data-id="me44" data-v="OK" class="">SI</button> <button data-id="me44" data-v="NC" class="">NO</button> <button data-id="me44" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me44" value=""></td></tr><tr><td colspan="4" class="sub">1.F Bombas auxiliares</td></tr><tr id="r_me45" class=""><td class="n">1.45</td><td class="it">Bomba de floculante 0611-PP-1103: PSV-16454 calibrada a 5,5 barg, manómetro PI-16454, válvulas de corte<span class="rf">Filo Op 5.3</span></td>
+    <td class="st"><button data-id="me45" data-v="OK" class="">SI</button> <button data-id="me45" data-v="NC" class="">NO</button> <button data-id="me45" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me45" value=""></td></tr><tr id="r_me46" class=""><td class="n">1.46</td><td class="it">Bombas 0611-PP-1104/1105/1106: válvula check, válvulas manuales con switches, manómetros<span class="rf">Filo Op 5.7</span></td>
+    <td class="st"><button data-id="me46" data-v="OK" class="">SI</button> <button data-id="me46" data-v="NC" class="">NO</button> <button data-id="me46" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me46" value=""></td></tr><tr id="r_me47" class=""><td class="n">1.47</td><td class="it">Bomba de sumidero 0611-PP-1128: válvulas de recirculación (4394) y de descarga (4393) operan<span class="rf">Filo Op 5.5</span></td>
+    <td class="st"><button data-id="me47" data-v="OK" class="">SI</button> <button data-id="me47" data-v="NC" class="">NO</button> <button data-id="me47" data-v="NA" class="">N/A</button> <span class="blank">—</span></td>
+    <td class="ob"><input data-ob="me47" value=""></td></tr></tbody></table></div></div>
+
+
+
+  <!--B:hid--><div class="sec">
+    <h2><span class="num">2. </span>UNIDAD HIDRÁULICA 0611-HP-1101 Y MECANISMO <small>Valores según Metso y filosofía de control</small></h2>
+    <table class="med" id="thid"><thead><tr><th>Parámetro</th><th>Valor</th><th>Unidad</th><th>Valor esperado</th><th>Observación</th></tr></thead><tbody><tr><td>Presión hidráulica / torque (OIT-16368)</td><td><input inputmode="decimal" data-r="0" data-c="1" value=""></td><td><input data-r="0" data-c="2" value="bar / %"></td><td><input data-r="0" data-c="3" value="0–200 bar = 0–100 % MOT"></td><td><input data-r="0" data-c="4" value=""></td></tr><tr><td>Torque en operación normal</td><td><input inputmode="decimal" data-r="1" data-c="1" value=""></td><td><input data-r="1" data-c="2" value="%"></td><td><input data-r="1" data-c="3" value="&lt; 40"></td><td><input data-r="1" data-c="4" value=""></td></tr><tr><td>Levante automático de rastras</td><td><input inputmode="decimal" data-r="2" data-c="1" value=""></td><td><input data-r="2" data-c="2" value="%"></td><td><input data-r="2" data-c="3" value="sube &gt; 50 · para &lt; 45"></td><td><input data-r="2" data-c="4" value=""></td></tr><tr><td>Bajada automática de rastras</td><td><input inputmode="decimal" data-r="3" data-c="1" value=""></td><td><input data-r="3" data-c="2" value="%"></td><td><input data-r="3" data-c="3" value="baja &lt; 40 · para &gt; 45"></td><td><input data-r="3" data-c="4" value=""></td></tr><tr><td>Trip por alto torque (PAHH-16325 / OAH)</td><td><input inputmode="decimal" data-r="4" data-c="1" value=""></td><td><input data-r="4" data-c="2" value="%"></td><td><input data-r="4" data-c="3" value="95 % MOT"></td><td><input data-r="4" data-c="4" value=""></td></tr><tr><td>Nivel de aceite HPU (visor)</td><td><input inputmode="decimal" data-r="5" data-c="1" value=""></td><td><input data-r="5" data-c="2" value="—"></td><td><input data-r="5" data-c="3" value="≥ 2/3 · LSL 51 % · LSLL 43,5 %"></td><td><input data-r="5" data-c="4" value=""></td></tr><tr><td>Temperatura de aceite HPU</td><td><input inputmode="decimal" data-r="6" data-c="1" value=""></td><td><input data-r="6" data-c="2" value="°C"></td><td><input data-r="6" data-c="3" value="TSHH 80"></td><td><input data-r="6" data-c="4" value=""></td></tr><tr><td>Altura de rastras (ZT-16367)</td><td><input inputmode="decimal" data-r="7" data-c="1" value=""></td><td><input data-r="7" data-c="2" value="mm"></td><td><input data-r="7" data-c="3" value="0 – 300"></td><td><input data-r="7" data-c="4" value=""></td></tr><tr><td>Velocidad de rastra</td><td><input inputmode="decimal" data-r="8" data-c="1" value=""></td><td><input data-r="8" data-c="2" value="rpm"></td><td><input data-r="8" data-c="3" value="0,053"></td><td><input data-r="8" data-c="4" value=""></td></tr><tr><td>Nivel aceite reductor (canister 6,5 L)</td><td><input inputmode="decimal" data-r="9" data-c="1" value=""></td><td><input data-r="9" data-c="2" value="—"></td><td><input data-r="9" data-c="3" value="visible en visor"></td><td><input data-r="9" data-c="4" value=""></td></tr><tr><td>Indicador filtro de retorno HPU</td><td><input inputmode="decimal" data-r="10" data-c="1" value=""></td><td><input data-r="10" data-c="2" value="—"></td><td><input data-r="10" data-c="3" value="sin alarma"></td><td><input data-r="10" data-c="4" value=""></td></tr><tr><td>Presión agua sprays mata espuma</td><td><input inputmode="decimal" data-r="11" data-c="1" value=""></td><td><input data-r="11" data-c="2" value="bar"></td><td><input data-r="11" data-c="3" value="3"></td><td><input data-r="11" data-c="4" value=""></td></tr><tr><td>Agua lavado SmartDiver®</td><td><input inputmode="decimal" data-r="12" data-c="1" value=""></td><td><input data-r="12" data-c="2" value="psi"></td><td><input data-r="12" data-c="3" value="15 – 100"></td><td><input data-r="12" data-c="4" value=""></td></tr></tbody></table>
+  </div><!--/B:hid-->
+
+
+
+
+  <!--B:seg--><div class="sec">
+    <h2><span class="num">3. </span>SEGUIMIENTO POST-ARRANQUE <small>Hitos de los manuales a programar en SAP</small></h2>
+    <table class="med" id="tseg"><thead><tr><th>Actividad</th><th style="width:70px">Hito</th><th style="width:110px">Fecha programada</th><th style="width:130px">Responsable / Aviso SAP</th><th style="width:60px">Realizado</th><th class="noprint"></th></tr></thead><tbody><tr><td><input type="text" data-t="seg" data-r="0" data-c="0" value="Reductor: cambio completo de aceite al cerrar comisionamiento (IOMS 6.2.6)"></td><td><input type="text" data-t="seg" data-r="0" data-c="1" value="Pre-oper."></td><td><input type="date" data-t="seg" data-r="0" data-c="2" value=""></td><td><input type="text" data-t="seg" data-r="0" data-c="3" value=""></td><td><select data-t="seg" data-r="0" data-c="4"><option></option><option>SI</option><option>NO</option></select></td><td class="noprint"><button class="del" onclick="delRow('seg',0)">✕</button></td></tr><tr><td><input type="text" data-t="seg" data-r="1" data-c="0" value="Bombas HR100: no reengrasar rodamientos (rodaje) (HR100 8.4.2)"></td><td><input type="text" data-t="seg" data-r="1" data-c="1" value="8 h"></td><td><input type="date" data-t="seg" data-r="1" data-c="2" value=""></td><td><input type="text" data-t="seg" data-r="1" data-c="3" value=""></td><td><select data-t="seg" data-r="1" data-c="4"><option></option><option>SI</option><option>NO</option></select></td><td class="noprint"><button class="del" onclick="delRow('seg',1)">✕</button></td></tr><tr><td><input type="text" data-t="seg" data-r="2" data-c="0" value="Bombas HR100: revisar y ajustar juego axial del impulsor (HR100 7.3)"></td><td><input type="text" data-t="seg" data-r="2" data-c="1" value="100 h"></td><td><input type="date" data-t="seg" data-r="2" data-c="2" value=""></td><td><input type="text" data-t="seg" data-r="2" data-c="3" value=""></td><td><select data-t="seg" data-r="2" data-c="4"><option></option><option>SI</option><option>NO</option></select></td><td class="noprint"><button class="del" onclick="delRow('seg',2)">✕</button></td></tr><tr><td><input type="text" data-t="seg" data-r="3" data-c="0" value="Bombas HR100: primer reengrase de rodamientos (HR100 8.4.2)"></td><td><input type="text" data-t="seg" data-r="3" data-c="1" value="250 h"></td><td><input type="date" data-t="seg" data-r="3" data-c="2" value=""></td><td><input type="text" data-t="seg" data-r="3" data-c="3" value=""></td><td><select data-t="seg" data-r="3" data-c="4"><option></option><option>SI</option><option>NO</option></select></td><td class="noprint"><button class="del" onclick="delRow('seg',3)">✕</button></td></tr><tr><td><input type="text" data-t="seg" data-r="4" data-c="0" value="Reductor: iniciar análisis de aceite trimestral (IOMS 8.4.3)"></td><td><input type="text" data-t="seg" data-r="4" data-c="1" value="500 h"></td><td><input type="date" data-t="seg" data-r="4" data-c="2" value=""></td><td><input type="text" data-t="seg" data-r="4" data-c="3" value=""></td><td><select data-t="seg" data-r="4" data-c="4"><option></option><option>SI</option><option>NO</option></select></td><td class="noprint"><button class="del" onclick="delRow('seg',4)">✕</button></td></tr><tr><td><input type="text" data-t="seg" data-r="5" data-c="0" value="Reductor: nivel de aceite en visor; HPU: nivel, filtro y respiradero (IOMS 8.4)"></td><td><input type="text" data-t="seg" data-r="5" data-c="1" value="Semanal"></td><td><input type="date" data-t="seg" data-r="5" data-c="2" value=""></td><td><input type="text" data-t="seg" data-r="5" data-c="3" value=""></td><td><select data-t="seg" data-r="5" data-c="4"><option></option><option>SI</option><option>NO</option></select></td><td class="noprint"><button class="del" onclick="delRow('seg',5)">✕</button></td></tr><tr><td><input type="text" data-t="seg" data-r="6" data-c="0" value="Lubricador corona de giro: LED y nivel de grasa (IOMS 8.4.4)"></td><td><input type="text" data-t="seg" data-r="6" data-c="1" value="Semanal"></td><td><input type="date" data-t="seg" data-r="6" data-c="2" value=""></td><td><input type="text" data-t="seg" data-r="6" data-c="3" value=""></td><td><select data-t="seg" data-r="6" data-c="4"><option></option><option>SI</option><option>NO</option></select></td><td class="noprint"><button class="del" onclick="delRow('seg',6)">✕</button></td></tr><tr><td><input type="text" data-t="seg" data-r="7" data-c="0" value="Levante: engrasar placas guía y probar finales de carrera (IOMS 8.5.2)"></td><td><input type="text" data-t="seg" data-r="7" data-c="1" value="Mensual"></td><td><input type="date" data-t="seg" data-r="7" data-c="2" value=""></td><td><input type="text" data-t="seg" data-r="7" data-c="3" value=""></td><td><select data-t="seg" data-r="7" data-c="4"><option></option><option>SI</option><option>NO</option></select></td><td class="noprint"><button class="del" onclick="delRow('seg',7)">✕</button></td></tr><tr><td><input type="text" data-t="seg" data-r="8" data-c="0" value="HPU: reversa de rastra para limpiar solenoide; limpiar sensor de cama (IOMS 8.5.3-4)"></td><td><input type="text" data-t="seg" data-r="8" data-c="1" value="Mensual"></td><td><input type="date" data-t="seg" data-r="8" data-c="2" value=""></td><td><input type="text" data-t="seg" data-r="8" data-c="3" value=""></td><td><select data-t="seg" data-r="8" data-c="4"><option></option><option>SI</option><option>NO</option></select></td><td class="noprint"><button class="del" onclick="delRow('seg',8)">✕</button></td></tr><tr><td><input type="text" data-t="seg" data-r="9" data-c="0" value="HPU y reductor: muestras de aceite a laboratorio (IOMS 8.6)"></td><td><input type="text" data-t="seg" data-r="9" data-c="1" value="Trimestral"></td><td><input type="date" data-t="seg" data-r="9" data-c="2" value=""></td><td><input type="text" data-t="seg" data-r="9" data-c="3" value=""></td><td><select data-t="seg" data-r="9" data-c="4"><option></option><option>SI</option><option>NO</option></select></td><td class="noprint"><button class="del" onclick="delRow('seg',9)">✕</button></td></tr><tr><td><input type="text" data-t="seg" data-r="10" data-c="0" value="Reductor: pernos, acople del eje y placa de torque (IOMS 8.6.3)"></td><td><input type="text" data-t="seg" data-r="10" data-c="1" value="Trimestral"></td><td><input type="date" data-t="seg" data-r="10" data-c="2" value=""></td><td><input type="text" data-t="seg" data-r="10" data-c="3" value=""></td><td><select data-t="seg" data-r="10" data-c="4"><option></option><option>SI</option><option>NO</option></select></td><td class="noprint"><button class="del" onclick="delRow('seg',10)">✕</button></td></tr></tbody></table>
+    <button class="addrow" onclick="addRow('seg')">+ Agregar actividad</button>
+  </div><!--/B:seg-->
+
+  <div class="sec gl">
+    <h2><span class="num">4. </span>SIGLAS Y DOCUMENTOS DE REFERENCIA</h2>
+    <table class="med gltab"><tbody>
+    <tr><th colspan="4" style="text-align:left">Documentos (etiqueta verde en cada ítem = documento y sección de donde sale el requisito)</th></tr>
+    <tr><td><b>IOMS</b></td><td colspan="3">Manual de Instalación, Operación, Mantenimiento y Seguridad del fabricante (Metso), del equipo principal del protocolo</td></tr>
+    <tr><td><b>Ctrl</b> / <b>Filo Op</b></td><td colspan="3">Filosofía de Control (0611-I-FI-00001) / Filosofía de Operación (0611-T-FI-00001) del proyecto EPC-007</td></tr>
+    <tr><td><b>Esp. técnica</b></td><td colspan="3">Especificación técnica Metso del filtro (OU500881378)</td></tr>
+    <tr><td><b>HR100 / HR200</b></td><td colspan="3">Manual IOMS de las bombas Metso Orion (descarga espesador / alimentación filtros)</td></tr>
+    <tr><td><b>P1 / P2</b> · <b>Laitex</b></td><td colspan="3">Pautas de mantenimiento PIMEC2SD621FL001 · Manual de la correa 0621-CV-1101</td></tr>
+    <tr><td><b>IEC 60034-1</b></td><td colspan="3">Norma de motores eléctricos: tolerancia de tensión ±10 % y de frecuencia ±2 % (zona B)</td></tr>
+    <tr><td><b>IEEE 43</b></td><td colspan="3">Norma de prueba de resistencia de aislación de máquinas rotatorias (mínimo 5 MΩ en motores &lt; 1 kV)</td></tr>
+    <tr><td><b>IEC 60947-4-1</b> · <b>EN ISO 13849-1</b></td><td colspan="3">Norma de contactores y relés de protección de motores · Norma de seguridad funcional de máquinas</td></tr>
+    <tr><th colspan="4" style="text-align:left">Siglas</th></tr>
+    <tr><td><b>LCP</b></td><td>Panel de control local (Local Control Panel)</td><td><b>CCM / MCC</b></td><td>Centro de Control de Motores</td></tr>
+    <tr><td><b>IED</b></td><td>Dispositivo electrónico inteligente: relé de protección y comunicación del arrancador (ej. ABB UMC-22 / UMC-100)</td><td><b>BT</b></td><td>Baja tensión</td></tr>
+    <tr><td><b>VDF / VSD</b></td><td>Variador de frecuencia</td><td><b>STO</b></td><td>Safe Torque Off: corte seguro del torque del motor desde el variador</td></tr>
+    <tr><td><b>DCS</b></td><td>Sistema de control distribuido (sala de control)</td><td><b>PLC</b></td><td>Controlador lógico programable</td></tr>
+    <tr><td><b>HMI</b></td><td>Interfaz humano-máquina (pantalla de operación)</td><td><b>UPS</b></td><td>Fuente de alimentación ininterrumpida</td></tr>
+    <tr><td><b>Marshalling panel</b></td><td>Gabinete de borneras que concentra y ordena las señales de campo</td><td><b>I/O</b></td><td>Entradas / salidas del sistema de control</td></tr>
+    <tr><td><b>HPU</b></td><td>Unidad de potencia hidráulica</td><td><b>MOT</b></td><td>Torque máximo de operación de la rastra</td></tr>
+    <tr><td><b>In</b> · <b>FS</b></td><td>Corriente nominal de placa · Factor de servicio del motor</td><td><b>IR</b></td><td>Resistencia de aislación (megado)</td></tr>
+    <tr><td><b>msnm</b></td><td>Metros sobre el nivel del mar</td><td><b>BEP</b></td><td>Punto de mejor eficiencia de la bomba</td></tr>
+    <tr><td><b>SDPT</b></td><td>Sistema de puesta a tierra</td><td><b>UMC</b></td><td>Relé de control y protección de motores ABB (UMC-22 / UMC-100)</td></tr>
+    <tr><td><b>P&amp;ID</b></td><td>Diagrama de cañerías e instrumentación</td><td><b>LOTO</b> · <b>ART</b></td><td>Bloqueo y etiquetado · Análisis de riesgo del trabajo</td></tr>
+    <tr><td><b>TAG de instrumentos</b></td><td colspan="3">1ª letra = variable: P presión · L nivel · F flujo · T temperatura · D densidad · A análisis · Z posición · O torque · H manual (HS selector/pulsador, HV válvula). Siguientes: I indicador · T transmisor · S switch · C controlador · V válvula. Alarmas: AL/AH bajo/alto · ALL/AHH muy bajo/muy alto (ej. LSLL = switch de nivel muy bajo, PAHH = alarma de presión muy alta).</td></tr>
+    </tbody></table>
+  </div>
+
+  <!-- Punch list -->
+  <div class="sec">
+    <h2><span class="num">5. </span>PUNCH LIST / PENDIENTES <small>A: impide operar · B: corregir antes de entrega · C: mejora</small></h2>
+    <table class="med" id="tpun"><thead><tr><th style="width:34px">N°</th><th>Descripción del pendiente</th><th style="width:60px">Disciplina</th><th style="width:48px">Cat.</th><th style="width:120px">Responsable</th><th style="width:105px">Fecha comp.</th><th class="noprint"></th></tr></thead><tbody><tr><td><input type="text" data-t="pun" data-r="0" data-c="0" value="1"></td><td><input type="text" data-t="pun" data-r="0" data-c="1" value=""></td><td><select data-t="pun" data-r="0" data-c="2"><option></option><option>OPE</option><option selected="">MEC</option><option>INS</option><option>ELE</option><option>MCO</option></select></td><td><select data-t="pun" data-r="0" data-c="3"><option></option><option>A</option><option>B</option><option>C</option></select></td><td><input type="text" data-t="pun" data-r="0" data-c="4" value=""></td><td><input type="date" data-t="pun" data-r="0" data-c="5" value=""></td><td class="noprint"><button class="del" onclick="delRow('pun',0)">✕</button></td></tr></tbody></table>
+    <button class="addrow" onclick="addRow('pun')">+ Agregar pendiente</button>
+  </div>
+
+  <div class="sec">
+    <h2><span class="num">6. </span>OBSERVACIONES GENERALES</h2>
+    <textarea data-k="obs" rows="4" placeholder="Comentarios, condiciones encontradas, desviaciones..."></textarea>
+  </div>
+
+  <div class="sec">
+    <h2><span class="num">7. </span>DICTAMEN</h2>
+    <div class="dict">
+      <label><input type="radio" name="dict" value="APTO" data-k="dict"> APTO PARA OPERAR</label>
+      <label><input type="radio" name="dict" value="CONDICIONAL" data-k="dict"> APTO CON PENDIENTES (sin categoría A)</label>
+      <label><input type="radio" name="dict" value="NO APTO" data-k="dict"> NO APTO</label>
+    </div>
+    <div class="firmas" id="firmas"><div><b>Ejecutado por – Mantenimiento Mecánico</b><input data-k="fn0" placeholder="Nombre" value=""><input data-k="fc0" placeholder="Cargo / Empresa" value="">
+  <div class="fl"><canvas id="sg0" width="600" height="84"></canvas></div><div class="lbl"><span>Firma</span><a onclick="borraFirma(0)">borrar</a></div>
+  <input type="date" data-k="fd0" value=""></div><div><b>Supervisado por</b><input data-k="fn1" placeholder="Nombre" value=""><input data-k="fc1" placeholder="Cargo / Empresa" value="">
+  <div class="fl"><canvas id="sg1" width="600" height="84"></canvas></div><div class="lbl"><span>Firma</span><a onclick="borraFirma(1)">borrar</a></div>
+  <input type="date" data-k="fd1" value=""></div><div><b>Aprobado por (PEM)</b><input data-k="fn2" placeholder="Nombre" value=""><input data-k="fc2" placeholder="Cargo / Empresa" value="">
+  <div class="fl"><canvas id="sg2" width="600" height="84"></canvas></div><div class="lbl"><span>Firma</span><a onclick="borraFirma(2)">borrar</a></div>
+  <input type="date" data-k="fd2" value=""></div></div>
+  </div>
+
+  <div class="foot"><span>Protocolo de puesta en operación – Espesador 0611-TK-1101 – Mantenimiento Mecánico</span><span id="fpie">  ·  2026-11-06</span></div>
+</div>
+</div>
+
+<script>
+const ESP='me',ESPNAME='Mantenimiento Mecánico',ESPCODE='MEC';
+const SECS_ALL=[
+ {id:'op',t:'1. OPERACIONES',d:'Filosofía de operación y control + IOMS Metso HRT-036',g:[
+  ['1.A Seguridad y condiciones previas',[
+   ['ART firmado; área aislada y señalizada; nadie dentro del estanque y sin objetos extraños','','IOMS 6.2.2.3 / 7.5.3.1'],
+   ['Mantenciones terminadas y bloqueos (LOTO) retirados por todas las disciplinas','','IOMS 7.5.3.2'],
+   ['Guardas de seguridad instaladas; pasillos y puente despejados','','IOMS 7.5.3.1-2'],
+   ['Parada de emergencia del LCP (HS-16342) probada: queda enclavada y todo se detiene','No debe partir con solo resetear el botón','IOMS 6.2.2.2'],
+   ['Sala de control y personal del área avisados del arranque','','IOMS 7.5.3.2'],
+   ['Procesos aguas abajo listos (0611-TK-1103, 611-TK-003, filtros) y líneas sin bloqueos','','IOMS 7.5.3.2'],
+   ['Respaldo por blackout probado: el generador mantiene giro y levante, 1 bomba de descarga y 1 bomba de agua de sello','Autonomía mínima 12 h','Filo Op 5.2 · Ctrl 7.1.4'],
+  ]],
+  ['1.B Alimentación y servicios disponibles',[
+   ['Cajón 0611-DB-1101: dardos motorizados HV-16315/16316 operan y la distribución es ajustable (50/50, 60/40); HV-16317 cerrado','','Ctrl 7.1'],
+   ['Cajón 0611-DB-1102: dardo HV-16323 habilita la alimentación; dardo HV-16322 (desvío a pretil) cerrado','','Ctrl 7.1'],
+   ['Harnero de seguridad 0611-SN-1101 operativo','','Filo Op 5.1'],
+   ['Estanque de desaireación (DA): nivel sobre la placa orificio y bajo la cámara de espuma, ajustado con el dardo manual','','IOMS 6.2.4.1'],
+   ['Floculante: estanque 611-TK-008 a 2,5 g/L; bomba 0611-PP-1103 (o 611-PP-104 de respaldo) habilitada con HV-16463/16464/16465','','Ctrl 7.1.1.4'],
+   ['Agua de dilución de floculante disponible (bombas 0621-PP-1118/1119)','Razón de dilución 1:10','Filo Op 5.3'],
+   ['Estanque 0611-TK-1102 con nivel; bomba 0611-PP-1106 operativa (agua mata espuma y lavados)','Debe estar operativa en todo momento','Ctrl 7.1.1.5'],
+   ['Bombas 0611-PP-1104/1105 disponibles hacia la PTAR 0651-PQ-1101','','Filo Op 5.7'],
+   ['Agua de sello de bombas de descarga con flujo y presión correctos (skid)','','Filo Op 5.4'],
+   ['Bomba de sumidero 0611-PP-1128 en automático (parte con LAH, para con LALL-16457)','','Filo Op 5.5'],
+   ['Agua de lavado continua al SmartDiver®','','SmartDiver'],
+   ['Válvula HV-16348 (a piscina de emergencia 611-PD-001) cerrada','Solo se abre en emergencia','Ctrl 7.1.1.3'],
+  ]],
+  ['1.C Condiciones de partida',[
+   ['Espesador con al menos 80 % de agua antes de partir','','Ctrl 7.1.2'],
+   ['HPU en marcha, levante de rastras en AUTO y rastra girando hacia adelante','','IOMS 7.5.5'],
+   ['Sprays mata espuma con conos completos y sin fugas (diseño 3 bar)','','IOMS 6.2.3.1 / 7.6.1.4'],
+   ['Líneas de floculante precargadas; concentración en el feedwell cercana a 0,025 % p/v','','IOMS 6.2.3'],
+   ['Lazo de densidad habilitado y recirculación por HV-16346 con HV-16347 cerrada','','Ctrl 7.1.2'],
+   ['Dilución en línea del floculante en marcha (FIC-16365, razón 1:10)','','Ctrl 7.1.2'],
+   ['Agua mata espuma con FIC-16375 (diseño 41 m³/h) y bomba 0611-PP-1106 operando','','Ctrl 7.1.1.5'],
+  ]],
+  ['1.D Puesta en marcha con pulpa',[
+   ['Dardo de alimentación HV-16316 abierto; floculante con SIC-14461A/B a la dosis de diseño +10 %','Diseño Metso 18 g/t · AMSA 15–18 g/t','Ctrl 7.1.2 · IOMS 6.2.4'],
+   ['Bomba de descarga en servicio (0611-PP-1101 o 1102, la otra en standby) partida a baja velocidad con su VDF (o en forma intermitente) cuando el espesador empieza a llenarse de sólidos, para que no se bloquee la boquilla de descarga del cono','Línea de descarga del cono (HV-16326/16327) recirculando al espesador por HV-16346, con HV-16347 cerrada','IOMS 7.5.5 · Ctrl 7.1.2'],
+   ['Masa de cama mantenida en 20 % durante la fase inicial de comisionamiento','','IOMS 6.2.4'],
+   ['Nivel de cama bajo el cono deflector del feedwell; interfase definida','','IOMS 7.5.2'],
+   ['Torque normal < 40 %; levante automático sobre 50 % hasta 45 %; bajada bajo 40 %','','Filo Op 5.2'],
+   ['Densidad de descarga dentro de 55–68 % de sólidos con flujo de 35–83,4 m³/h','','Ctrl 7.1.1.3'],
+   ['Al alcanzar el % de sólidos: cerrar HV-16346, abrir HV-16347 y lavar la línea de recirculación ~30 s (HV-16452/16351)','','Ctrl 7.1.2'],
+   ['Distribución a estanques: FIC-16358 en 38,1 m³/h y PIC-16357 en 2,0–2,4 barg','','Ctrl 7.1.1.7'],
+   ['Turbidez de rebose (AIT-16324) y agua a PTAR (AIT-16495) dentro de rango','Rebose a PTAR ≤ 500 ppm de sólidos','Ctrl 7.1.1.6 · Filo Op 5.1'],
+   ['Cambios de floculante pequeños (±5 %), esperando varias horas su efecto','','IOMS 6.2.4'],
+   ['Muestras de descarga (dejar correr 5–10 s) y de rebose tomadas y registradas','','IOMS 7.5.2'],
+   ['Secuencia de lavado automático de la bomba detenida verificada','','Ctrl 7.1.6.13-14'],
+   ['Parada normal probada: cortar alimentación, floculante y dilución; bombear la cama (torque ≤ 5 % en parada corta) y lavar líneas','','IOMS 7.5.7.1'],
+  ]],
+ ]},
+ {id:'me',t:'2. MANTENIMIENTO MECÁNICO',d:'IOMS Metso HRT-036 + IOMS Orion HR100',g:[
+  ['2.A Estanque, rastras y feedwell',[
+   ['Sitio despejado; pasillos libres, en especial alrededor del mecanismo','','IOMS 6.2.1'],
+   ['Piso sin puntos altos que choquen con las rastras','','IOMS 6.2.1'],
+   ['Nivel de los brazos de rastra verificado (2 cortos y 2 largos)','','IOMS 6.2.1 / 2.5.5'],
+   ['Verticalidad del eje de accionamiento verificada','','IOMS 6.2.1'],
+   ['Pernos de ensamble con torque según planos (rastras, puente, accionamiento, placa de torque)','','IOMS 6.2.1 / 8.6.3'],
+   ['Holguras de brazos, aspas y raspadores de ambos conos según plano','','IOMS 8.8.10'],
+   ['Rastra 1 vuelta hacia adelante sin tocar nada (aspas, raspadores del cono de descarga y del cono deflector)','','IOMS 6.2.2.3'],
+   ['Prueba en seco de la rastra ≥ 8 h con temperatura de reductor y aceite registrada cada hora; prueba corta en reversa','Registrar en sección MonCon','IOMS 6.2.2.3'],
+   ['Llenado con agua sin rastra y sin fugas; estanque lleno 24 h e inspeccionado','','IOMS 6.2.3'],
+   ['Rastra con agua por varias horas sin desalineamiento, sobrecalentamiento ni ruido anormal','','IOMS 6.2.3'],
+   ['Feedwell Reactorwell™: cono deflector (gap 100 mm) y 8 puertos Autodil™ libres','','IOMS 2.5.8'],
+   ['Descanso sumergido (Ø200) y booms de espuma apernados','','IOMS 8.8.10'],
+   ['Estanque DA sin fugas en bridas; dardo manual opera','','IOMS 8.4.6'],
+   ['Sprays de espuma: Y-strainer limpio, boquillas sin obstrucción, cable de seguridad instalado','','IOMS 8.4.7'],
+  ]],
+  ['2.B Accionamiento de rastra',[
+   ['Reductor Bonfiglioli 321 L4 lleno de aceite (esperar 10 min y rellenar); nivel visible en el canister de 6,5 L','','IOMS 5.4.1 / 8.10'],
+   ['Reductor sin fugas por sellos, tapones ni carcasa; limpio; guardas instaladas','','IOMS 8.4.3'],
+   ['Motor hidráulico GM03 350 y mangueras sin fugas ni daños','','IOMS 7.5.3.5'],
+   ['Corona de giro con grasa (380 ml de fábrica) y línea purgada (~100 ml)','','IOMS 5.4.1'],
+   ['Lubricador automático SKF activado: período 12 meses, fecha anotada, LED verde','','IOMS 5.4.1 / 8.4.4'],
+  ]],
+  ['2.C Levante de rastras (Mega, 300 mm)',[
+   ['Placas guía del levante engrasadas (grasa de uso general)','','IOMS 5.4.1 / 8.4.5'],
+   ['Cilindros de levante sin fugas en sellos; todos se mueven en la misma dirección','','IOMS 6.2.1.1'],
+   ['Mangueras no se pellizcan ni se tensan al levantar; nada choca al levantar','','IOMS 6.2.1.1'],
+   ['Levante en pasos de 50 mm con 1 min de espera hasta 300 mm; el mecanismo sube nivelado y no deriva','','IOMS 6.2.2.4'],
+   ['Bajada de 300 mm en ~1 min; en AUTO baja 2 s cada 2 min','','IOMS 6.2.2.4'],
+   ['Con las rastras en la altura máxima y girando, no tocan ninguna parte del espesador','','IOMS 6.2.2.4'],
+  ]],
+  ['2.D Unidad hidráulica 0611-HP-1101',[
+   ['Instalación según esquema hidráulico; FAT y checklists de la HPU completos','','IOMS 6.2.1'],
+   ['Nivel de aceite ≥ 2/3 del visor con los cilindros retraídos','','IOMS 8.4.2'],
+   ['Conexiones apretadas y válvula de succión de la bomba abierta','','IOMS 6.2.1.1'],
+   ['Sentido de giro del motor correcto (polaridad)','','IOMS 6.2.2.1'],
+   ['HPU 1 h en marcha controlando presiones y temperatura, sin fugas','','IOMS 6.2.2.1'],
+   ['Indicador de filtro de retorno OK; respiradero limpio; bandeja de goteo limpia','','IOMS 8.4.2'],
+   ['Ventilador del enfriador sin obstrucciones','','IOMS 7.5.3.4'],
+   ['Tapas antimanipulación de las válvulas de alivio intactas','','IOMS 8.4.2'],
+   ['Elementos de filtro de aceite de repuesto en terreno','','IOMS 6.2.1.1'],
+  ]],
+  ['2.E Bombas de descarga 0611-PP-1101/1102 (Metso Orion HR100)',[
+   ['Carcasa y tuberías limpias de residuos antes de conectar','','HR100 6.1'],
+   ['Pernos de fundación y del cilindro de cojinete con torque','','HR100 6.1'],
+   ['Conjunto giratorio gira libre a mano','','HR100 6.1'],
+   ['Sentido de giro correcto','En reversa el impulsor puede desenroscarse','HR100 6.1'],
+   ['Rodamientos lubricados (SKF LGMT3 o equivalente)','No reengrasar en las primeras 8 h','HR100 8.4'],
+   ['Transmisión 3 × 5VX850: tensión de correas y alineamiento de poleas (3GR-5V-11,3" / 10,9")','','HR100 Esp.'],
+   ['Guardas instaladas; zona del prensaestopas limpia','','HR100 6.1'],
+   ['Sin fugas en conexiones de entrada y salida','','HR100 7.1'],
+   ['Prensaestopas con fuga controlada y agua de sello correcta','','HR100 7.3'],
+   ['Válvulas de cuchilla de spigot (HV-16326/16327) y de descarga operan libres','','Ctrl 7.1.1.2'],
+  ]],
+  ['2.F Bombas auxiliares',[
+   ['Bomba de floculante 0611-PP-1103: PSV-16454 calibrada a 5,5 barg, manómetro PI-16454, válvulas de corte','','Filo Op 5.3'],
+   ['Bombas 0611-PP-1104/1105/1106: válvula check, válvulas manuales con switches, manómetros','','Filo Op 5.7'],
+   ['Bomba de sumidero 0611-PP-1128: válvulas de recirculación (4394) y de descarga (4393) operan','','Filo Op 5.5'],
+  ]],
+ ]},
+ {id:'in',t:'3. INSTRUMENTACIÓN Y CONTROL',d:'Inspección y verificación de mantenimiento',g:[
+  ['1.A Inspección general de instrumentos en terreno',[
+   ['Placa / etiqueta de TAG en cada instrumento, coincidente con P&ID, índice de instrumentos y HMI','Detalle por instrumento en sección 2',''],
+   ['Montaje firme, soportes y protecciones mecánicas instalados; instrumento accesible para mantenimiento','',''],
+   ['Cableado, canalización, prensaestopas y sellos correctos; tapas cerradas (grado IP)','',''],
+   ['Conexiones de proceso, líneas de impulso y válvulas de aislamiento / purga sin fugas; manifolds operativos','',''],
+   ['Pantallas (shield) de cables de señal aterrizadas en un solo extremo; tierra de instrumentos conectada','',''],
+   ['Cajas de conexión (junction box) cerradas e identificadas, con borneras rotuladas','',''],
+   ['Fuentes de 24 V CC de instrumentación y solenoides','21,6–26,4 V (±10 %)','Planos eléctricos Metso'],
+   ['Aire de instrumentos: presión, filtro-regulador y drenajes de condensado operativos','6–10 bar, seco (ISO 8573-1 clase 7:4:4)','Esp. técnica'],
+  ]],
+  ['1.B Calibración y lazos',[
+   ['Certificados de calibración vigentes y trazables, archivados en carpeta del equipo','Registro en sección 4',''],
+   ['Lazos 4–20 mA verificados al 0 / 50 / 100 % del rango (4 / 12 / 20 mA)','Tolerancia ±0,16 mA · falla de señal < 3,6 mA o > 21 mA (rango válido 3,8–20,5 mA)','NAMUR NE43'],
+   ['Lectura local coincide con HMI / DCS','Error ≤ ±1 % del span',''],
+   ['Alarmas de falla de instrumento (fuera de rango, falla de comunicación) visibles en HMI / DCS','',''],
+   ['Switches y finales de carrera: punto de disparo verificado y registrado','PAHH-16325 95 % MOT · LSL 51 % / LSLL-16373 43,5 % · TSHH-16374 80 °C · ZSL/ZSH-16367',''],
+   ['Válvulas inspeccionadas: actuador, solenoide, finales de carrera y respuesta a comando','Detalle por válvula en sección 3',''],
+   ['Disparos de protección del equipo probados junto con Operaciones','Alto torque, bajo flujo / presión de agua de sello, bajo flujo de descarga',''],
+  ]],
+  ['1.C Instrumentos especiales del espesador',[
+   ['Densímetro nuclear DIT-16338: señalética radiológica, obturador operativo y bloqueable, licencia y prueba de fuga (frotis) vigentes','Intervención solo por personal autorizado','Ctrl 7.1.1.3'],
+   ['SmartDiver® AL-6410: agua de lavado continua, filtro limpio, sensor y cable sin daños, interruptor de rastrillado ajustado','Agua 15–100 psi · filtro 25 µm','SmartDiver'],
+   ['Masa de cama PIT-16321A/B: válvula de bola de aislamiento correcta, diafragma limpio, sensor retráctil operable','4 mA = 62,6 kPa · 20 mA = 130 kPa','IOMS 2.5.10 / 5.4.2'],
+   ['Altura de rastra ZT-16367 (ultrasónico): sensor limpio, sin obstrucciones en su haz','0–300 mm','IOMS 2.5.9'],
+   ['Torque OIT-16368: lectura coherente con el manómetro de la HPU','0–200 bar = 0–100 % MOT','Ctrl 7.1.1.1'],
+   ['Turbidímetros AIT-16324 / AIT-16495: celda y lente limpios, flujo de muestra OK','',''],
+   ['Flujómetros (FIT-16340/16365/16370/16375/16410/16411): tubería llena, anillos de tierra conectados, sin vibración','',''],
+  ]],
+ ]},
+ {id:'el',t:'4. ELÉCTRICO',d:'Inspección de tableros, CCM, mando y motores',g:[
+  ['1.A Tableros eléctricos (LCP, marshalling, gabinetes de control)',[
+   ['Identificación informativa, técnica y de precaución instalada y legible (TAG, tensión, riesgo eléctrico)','Detalle por tablero en sección 2',''],
+   ['Puertas cerradas, con dispositivos de cierre operativos','',''],
+   ['Bastidor, envolvente, canalizaciones y sistema de puesta a tierra (SDPT) correctos y según norma','Continuidad de conductores de protección < 1 Ω','IOMS 5.4.2'],
+   ['Indicadores luminosos de presencia de tensión y parada de emergencia operativos','',''],
+   ['Contratapa, dispositivos y accesorios con afianzamiento seguro','',''],
+   ['LCP del puente: alimentación 120 V CA + 120 V CA desde UPS; fuente 24 V CC de instrumentación OK','120 V CA: 108–132 V · 24 V CC: 21,6–26,4 V','IOMS 7.5.3.3 · Planos Metso'],
+  ]],
+  ['1.B Centro de Control de Motores (CCM)',[
+   ['Identificación informativa, técnica y de precaución de cada cubículo / arrancador','Detalle por motor en sección 3',''],
+   ['Cierre de puertas y sistema de cierre de cubículos en buen estado','',''],
+   ['TAG exacto coincide entre terreno y sala eléctrica','',''],
+   ['Indicación luminosa del cubículo coincide con el estado real del equipo (detenido / corriendo / en falla)','',''],
+   ['Datos de los dispositivos (relé UMC, VDF, etc.) verificados contra el TAG del equipo','IED en uso en Muelle: ABB UMC-22 / UMC-100','Ctrl 5.2.2'],
+   ['Protecciones ajustadas según corriente de placa','Relé térmico / IED: 100–105 % de In, sin superar In × factor de servicio','IEC 60947-4-1'],
+  ]],
+  ['1.C Mando y seguridad',[
+   ['Parada de emergencia verificada según el protocolo del equipo en prueba: siempre con cableado duro (hardwired) y reset manual','HS-16342 del LCP; el trip del CCM detiene la HPU',''],
+   ['Arranque en modo manual desde terreno verificado; se confirma pérdida de mando desde la sala de control mientras está en local','',''],
+   ['Estatus corriendo, detenido, sin energía y en falla verificado con la sala de control','',''],
+   ['Generador de respaldo y transferencia automática probados; carga: mecanismo + 1 bomba de descarga + 1 bomba de sello','Autonomía 12 h','Filo Op 5.2 · Ctrl 7.1.4'],
+   ['Iluminación normal y de emergencia del puente y del área','',''],
+  ]],
+  ['1.D Pruebas eléctricas de motores',[
+   ['Tensión de fuerza 380 V CA, 50 Hz, trifásica','342–418 V (±10 %) · 49–51 Hz · desbalance de tensión ≤ 1 %. Registrar en sección 4','IEC 60034-1'],
+   ['Megado de todos los motores registrado','500 V CC, 1 min: mínimo 5 MΩ, recomendable > 100 MΩ. Sección 4','IEEE 43'],
+   ['Sentido de giro verificado en todos los motores','',''],
+   ['VDF VSD-1101/1102 de PP-1101/1102 parametrizados (motores WEG 50 HP seteados para 1000 msnm)','Bomba 1204–1819 rpm · desbalance de corriente ≤ 10 %','HR100 Esp. · Ctrl 7.1.1.2'],
+   ['Calefactor de inmersión de la HPU','Solo exigido bajo 0 °C; N/A si no está instalado','IOMS 7.5.3.8'],
+  ]],
+ ]},
+ {id:'mc',t:'5. MONITOREO DE CONDICIÓN (MONCON)',d:'Línea base para seguimiento predictivo',g:[
+  ['5.A Línea base',[
+   ['Vibración de línea base en motor HPU, bombas HR100 y bombas auxiliares','Registrar en sección 2','HR100 2.4.3'],
+   ['Bombas HR100 medidas a caudal BEP y al 50 % de BEP','Bomba nueva ≤ 4,5 mm/s; detener sobre 9,3 mm/s','HR100 2.4.3'],
+   ['Temperatura del reductor y del aceite registrada cada hora en la prueba en seco (8 h)','','IOMS 6.2.2.3'],
+   ['Torque de línea base registrado con agua y con carga','','IOMS 6.2.3'],
+   ['Muestra de aceite del reductor de línea base','Análisis trimestral desde las 500 h','IOMS 8.4.3'],
+   ['Muestra de aceite de la HPU (conteo de partículas) de línea base','Luego trimestral','IOMS 8.6.1'],
+   ['Termografía de LCP, CCM y motores con carga','',''],
+   ['Temperatura de rodamientos de bombas HR100 estable','Evitar > 100 °C','HR100 8.4.2'],
+   ['Estetoscopio / ultrasonido en reductor, motor hidráulico y bombas','',''],
+   ['Puntos de medición rotulados y cargados en la ruta predictiva','',''],
+  ]],
+ ]},
+];
+const SECS=SECS_ALL.filter(s=>s.id==ESP).map(s=>({id:s.id,t:'1. CHECK LIST – '+ESPNAME.toUpperCase(),d:s.d,g:s.g.map(g=>[g[0].replace(/^\d+\./,'1.'),g[1]])}));
+const DEF={
+ vib:[['0611-HP-1101 Motor HPU 11 kW'],['0611-HP-1101 Bomba hidráulica'],['0611-PP-1101 Motor WEG 50 HP'],['0611-PP-1101 Bomba HR100'],['0611-PP-1102 Motor WEG 50 HP'],['0611-PP-1102 Bomba HR100'],['0611-PP-1104 Motor / bomba'],['0611-PP-1105 Motor / bomba'],['0611-PP-1106 Motor / bomba'],['0611-PP-1103 Floculante'],['0611-PP-1128 Sumidero']],
+ ter:[['LCP espesador (puente)'],['Marshalling panel / I/O remoto'],['CCM espesamiento'],['VDF 0611-VSD-1101/1102'],['Motor HPU 0611-HP-1101'],['Reductor de rastra (carcasa)'],['Motores 0611-PP-1101/1102']],
+ hid:[['Presión hidráulica / torque (OIT-16368)','bar / %','0–200 bar = 0–100 % MOT'],['Torque en operación normal','%','< 40'],['Levante automático de rastras','%','sube > 50 · para < 45'],['Bajada automática de rastras','%','baja < 40 · para > 45'],['Trip por alto torque (PAHH-16325 / OAH)','%','95 % MOT'],['Nivel de aceite HPU (visor)','—','≥ 2/3 · LSL 51 % · LSLL 43,5 %'],['Temperatura de aceite HPU','°C','TSHH 80'],['Altura de rastras (ZT-16367)','mm','0 – 300'],['Velocidad de rastra','rpm','0,053'],['Nivel aceite reductor (canister 6,5 L)','—','visible en visor'],['Indicador filtro de retorno HPU','—','sin alarma'],['Presión agua sprays mata espuma','bar','3'],['Agua lavado SmartDiver®','psi','15 – 100']],
+ ele:[['0611-HP-1101 HPU espesador','11'],['0611-PP-1101 descarga','37'],['0611-PP-1102 descarga','37'],['0611-PP-1103 floculante',''],['0611-PP-1104 agua recuperada',''],['0611-PP-1105 agua recuperada',''],['0611-PP-1106 agua lavado',''],['0611-PP-1128 sumidero','']],
+ cic:[['1'],['2'],['3']],
+ tab:[['LCP espesador TK-1101-LCP01 (puente)'],['Marshalling panel espesador'],['Gabinete I/O remoto (DCS)'],['Tablero SmartDiver® AL-6410'],['Tablero de transferencia / generador de respaldo'],['Caja de conexión HPU 0611-HP-1101']],
+ ccm:[['0611-HP-1101 HPU espesador'],['0611-PP-1101 descarga (VDF)'],['0611-PP-1102 descarga (VDF)'],['0611-PP-1103 floculante (VDF)'],['0611-PP-1104 agua recuperada'],['0611-PP-1105 agua recuperada'],['0611-PP-1106 agua lavado'],['0611-PP-1128 sumidero'],['HV-16315 / HV-16316 actuadores dardos'],['SmartDiver® motor']],
+ pun:[['1','',ESPCODE]],
+ cal:[['0611-OIT-16368 Torque rastras','0 – 200 bar'],['0611-PS-16325 Alto torque (95 %)','0 – 200 bar'],['0611-ZT-16367 Altura rastras','0 – 300 mm'],['0611-PIT-16321A Masa de cama','62,6 – 130 kPa'],['0611-PIT-16321B Masa de cama','62,6 – 130 kPa'],['0611-LIT-16320 Interfase (SmartDiver®)',''],['0611-AIT-16324 Turbidez rebose',''],['0611-DIT-16338 Densímetro descarga',''],['0611-FIT-16340 Flujo descarga',''],['0611-FIT-16370 Flujo floculante',''],['0611-FIT-16365 Agua dilución',''],['0611-FIT-16375 Agua mata espuma',''],['0611-LIT-16319 Nivel cajón DB-1101','0 – 100 %'],['0611-LIT-16455 Nivel cajón DB-1102','0 – 100 %'],['0611-LIT-16371 Nivel TK-1102','0 – 100 %'],['0611-LIT-16457 Nivel sumidero','0 – 100 %'],['0611-FIT-16410/16411 Flujo agua sello',''],['0611-PIT-16414/16415 Presión agua sello',''],['0611-AIT-16495 Turbidez agua a PTAR',''],['0611-PIT-16389 Presión descarga PP-1104/1105','']],
+ ins:[['0611-OIT-16368 Torque rastras'],['0611-PS-16325 Alto torque (95 %)'],['0611-ZT-16367 Altura rastras'],['0611-PIT-16321A Masa de cama'],['0611-PIT-16321B Masa de cama'],['0611-LIT-16320 Interfase (SmartDiver®)'],['0611-AIT-16324 Turbidez rebose'],['0611-DIT-16338 Densímetro descarga'],['0611-FIT-16340 Flujo descarga'],['0611-FIT-16370 Flujo floculante'],['0611-FIT-16365 Agua dilución'],['0611-FIT-16375 Agua mata espuma'],['0611-LIT-16319 Nivel cajón DB-1101'],['0611-LIT-16455 Nivel cajón DB-1102'],['0611-LIT-16371 Nivel TK-1102'],['0611-LIT-16457 Nivel sumidero'],['0611-FIT-16410/16411 Flujo agua sello'],['0611-PIT-16414/16415 Presión agua sello'],['0611-AIT-16495 Turbidez agua a PTAR'],['0611-PIT-16389 Presión descarga PP-1104/1105']],
+ vlv:[['HV-16315 dardo DB-1101 (motorizado)'],['HV-16316 dardo DB-1101 (motorizado)'],['HV-16317 dardo DB-1101'],['HV-16322 dardo desvío a pretil'],['HV-16323 dardo alimentación DB-1102'],['HV-16326 cuchilla spigot'],['HV-16327 cuchilla spigot'],['HV-16346 recirculación'],['HV-16347 descarga a estanques'],['HV-16348 a piscina emergencia'],['HV-16339 descarga'],['HV-16351 / HV-16452 lavado líneas'],['HV-16463/16464/16465 floculante'],['FV-16365 agua dilución'],['FV-16375 agua mata espuma'],['FV-16358 control flujo'],['PV-16357 control presión']],
+ seg:[['Reductor: cambio completo de aceite al cerrar comisionamiento','Pre-oper.','IOMS 6.2.6'],['Bombas HR100: no reengrasar rodamientos (rodaje)','8 h','HR100 8.4.2'],['Bombas HR100: revisar y ajustar juego axial del impulsor','100 h','HR100 7.3'],['Bombas HR100: primer reengrase de rodamientos','250 h','HR100 8.4.2'],['Reductor: iniciar análisis de aceite trimestral','500 h','IOMS 8.4.3'],['Reductor: nivel de aceite en visor; HPU: nivel, filtro y respiradero','Semanal','IOMS 8.4'],['Lubricador corona de giro: LED y nivel de grasa','Semanal','IOMS 8.4.4'],['Levante: engrasar placas guía y probar finales de carrera','Mensual','IOMS 8.5.2'],['HPU: reversa de rastra para limpiar solenoide; limpiar sensor de cama','Mensual','IOMS 8.5.3-4'],['HPU y reductor: muestras de aceite a laboratorio','Trimestral','IOMS 8.6'],['Reductor: pernos, acople del eje y placa de torque','Trimestral','IOMS 8.6.3']],
+};
+const COLS={vib:9,ter:6,ele:12,cic:11,pun:6,seg:5,cal:9,tab:7,ccm:10,ins:10,vlv:10};
+const FIRMAS=['Ejecutado por – '+ESPNAME,'Supervisado por','Aprobado por (PEM)'];
+
+let S={f:{},st:{},ob:{},t:{},sig:{}};
+const LS='ppo_0611TK1101_v1_'+ESP;
+function load(){try{const j=localStorage.getItem(LS);if(j)S=Object.assign(S,JSON.parse(j))}catch(e){}}
+function save(){try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}resumen()}
+
+function render(){
+ const c=document.getElementById('secs');let h='';
+ SECS.forEach(s=>{let n=0;
+  h+=`<div class="sec"><h2>${s.t}<small>${s.d}</small></h2><table class="chk"><thead><tr><th>N°</th><th>Ítem de verificación</th><th>Estado</th><th>Observación</th></tr></thead><tbody>`;
+  s.g.forEach(g=>{h+=`<tr><td colspan="4" class="sub">${g[0]}</td></tr>`;
+   g[1].forEach(it=>{n++;const id=s.id+n;const v=S.st[id]||'';
+    h+=`<tr id="r_${id}" class="${v=='NC'?'isNC':''}"><td class="n">${s.t.split('.')[0]}.${n}</td><td class="it">${it[0]}${it[1]?`<small>${it[1]}</small>`:''}${it[2]?`<span class="rf">${it[2]}</span>`:''}</td>
+    <td class="st">${['OK','NC','NA'].map(x=>`<button data-id="${id}" data-v="${x}" class="${v==x?'on':''}">${x=='NA'?'N/A':x=='NC'?'NO':'SI'}</button> `).join('')}<span class="blank">—</span></td>
+    <td class="ob"><input data-ob="${id}" value="${esc(S.ob[id]||'')}"></td></tr>`;});
+  });
+  h+='</tbody></table></div>';});
+ c.innerHTML=h;
+ c.querySelectorAll('.st button').forEach(b=>b.onclick=()=>{const id=b.dataset.id,v=b.dataset.v;
+  S.st[id]=S.st[id]==v?'':v;b.parentNode.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.v==S.st[id]));
+  document.getElementById('r_'+id).classList.toggle('isNC',S.st[id]=='NC');save();});
+ c.querySelectorAll('[data-ob]').forEach(i=>i.oninput=()=>{S.ob[i.dataset.ob]=i.value;save();});
+ ['vib','ter','ele','cic','pun','seg','cal','tab','ccm','ins','vlv'].forEach(k=>{if(document.getElementById('t'+k))tb(k)});if(document.getElementById('thid'))hid();numerar();firmas();
+}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}
+function tb(k){
+ if(!S.t[k])S.t[k]=k=='seg'?DEF.seg.map(r=>[`${r[0]} (${r[2]})`,r[1]]):DEF[k].map(r=>r.slice());
+ const body=document.querySelector('#t'+k+' tbody');
+ body.innerHTML=S.t[k].map((r,i)=>{let cells='';
+  const n=COLS[k];
+  for(let j=0;j<n;j++){
+   let v=esc(r[j]||'');
+   if(k=='ter'&&j==3){cells+=`<td id="dt_${i}"></td>`;continue}
+   if(k=='ter'&&j==4){cells+=`<td id="sv_${i}"></td>`;continue}
+   if(k=='pun'&&j==3){cells+=`<td><select data-t="${k}" data-r="${i}" data-c="${j}">${['','A','B','C'].map(o=>`<option ${o==r[j]?'selected':''}>${o}</option>`).join('')}</select></td>`;continue}
+   if(k=='pun'&&j==2){cells+=`<td><select data-t="${k}" data-r="${i}" data-c="${j}">${['','OPE','MEC','INS','ELE','MCO'].map(o=>`<option ${o==r[j]?'selected':''}>${o}</option>`).join('')}</select></td>`;continue}
+   if((k=='tab'&&j>=1&&j<=5)||((k=='ccm'||k=='ins'||k=='vlv')&&j>=1&&j<=8)){/*MXSEL*/cells+=`<td><select class="mxs" data-t="${k}" data-r="${i}" data-c="${j}">${['','✔','✘','N/A'].map(o=>`<option ${o==r[j]?'selected':''}>${o}</option>`).join('')}</select></td>`;continue}
+   if(k=='cal'&&j==6){cells+=`<td><select data-t="${k}" data-r="${i}" data-c="${j}">${['','SI','NO'].map(o=>`<option ${o==r[j]?'selected':''}>${o}</option>`).join('')}</select></td>`;continue}
+   if(k=='cal'&&j==5){cells+=`<td id="er_${i}"></td>`;continue}
+   if(k=='cal'&&j==8){cells+=`<td id="em_${i}"></td>`;continue}
+   if(k=='seg'&&j==4){cells+=`<td><select data-t="${k}" data-r="${i}" data-c="${j}">${['','SI','NO'].map(o=>`<option ${o==r[j]?'selected':''}>${o}</option>`).join('')}</select></td>`;continue}
+   if(k=='ele'&&j==11){cells+=`<td><select data-t="${k}" data-r="${i}" data-c="${j}">${['','SI','NO'].map(o=>`<option ${o==r[j]?'selected':''}>${o}</option>`).join('')}</select></td>`;continue}
+   const num=j>0&&!(k=='pun')&&!(k=='tab')&&!(k=='ccm')&&!(k=='ins')&&!(k=='vlv')&&!(k=='seg')&&!(k=='cal'&&j==1)&&!(k=='cic'&&j==1)&&!(k=='ter'&&j==5);
+   const type=((k=='pun'&&j==5)||(k=='seg'&&j==2))?'date':(k=='cic'&&j==1)?'time':'text';
+   cells+=`<td><input type="${type}" ${num?'inputmode="decimal"':''} data-t="${k}" data-r="${i}" data-c="${j}" value="${v}"></td>`;
+  }
+  if(k=='cal'){const a=cells.split('</td>');cells=[0,1,2,3,4,7,5,8,6].map(x=>a[x]+'</td>').join('')}
+  if(k=='vib')cells+=`<td id="zv_${i}"></td>`;
+  if(k=='ele')cells+=`<td id="ub_${i}"></td>`;
+  cells+=`<td class="noprint"><button class="del" onclick="delRow('${k}',${i})">✕</button></td>`;
+  return `<tr>${cells}</tr>`;}).join('');
+ body.querySelectorAll('[data-t]').forEach(e=>{e.oninput=e.onchange=()=>{S.t[k][e.dataset.r][e.dataset.c]=e.value;calc(k);save();}});
+ calc(k);
+}
+function num(v){const x=parseFloat(String(v||'').replace(',','.'));return isNaN(x)?null:x}
+function calc(k){
+ if((k=='tab'||k=='ccm'||k=='ins'||k=='vlv')&&document.getElementById('t'+k))document.querySelectorAll('#t'+k+' select.mxs').forEach(e=>e.style.background=e.value=='✔'?'#d6f0df':e.value=='✘'?'#fbd5d5':'');
+ if(k=='cal')S.t.cal.forEach((r,i)=>{const td=document.getElementById('em_'+i);if(!td)return;const p=num(r[2]),ma=num(r[7]);const m=String(r[1]||'').replace(/,/g,'.').match(/(-?[\d.]+)\s*[–-]\s*(-?[\d.]+)/);
+  if(ma!==null&&(ma<3.8||ma>20.5)){td.innerHTML='<span class="z zD">Falla NE43</span>';return}
+  if(!m||p===null){td.innerHTML=ma!==null?'':'';return}const lo=parseFloat(m[1]),sp=parseFloat(m[2])-lo;if(!sp){td.innerHTML='';return}
+  const ex=4+16*(p-lo)/sp;if(ma===null){td.innerHTML=`${ex.toFixed(2)}`;return}const e=ma-ex;
+  td.innerHTML=`${ex.toFixed(2)} / <span class="z ${Math.abs(e)<=0.16?'zA':Math.abs(e)<=0.32?'zC':'zD'}">${e>=0?'+':''}${e.toFixed(2)}</span>`});
+ if(k=='ele'&&document.getElementById('tele'))S.t.ele.forEach((r,i)=>{const row=document.querySelectorAll('#tele tbody tr')[i];if(!row)return;
+  const cell=c=>row.querySelector(`[data-c="${c}"]`);const paint=(c,z)=>{const e=cell(c);if(e)e.style.background=z?{A:'#d6f0df',C:'#fff0c2',D:'#fbd5d5'}[z]:''};
+  const ir=num(r[3]);paint(3,ir===null?null:ir<5?'D':ir<=100?'C':'A');
+  const v=num(r[4]);paint(4,v===null?null:(v<342||v>418)?'D':'A');
+  const In=num(r[2]);[8,9,10].forEach(c=>{const x=num(r[c]);paint(c,(x===null||In===null)?null:x>In?'D':'A')});
+  let I=[8,9,10].map(c=>num(r[c])).filter(x=>x!==null);if(I.length<3)I=[5,6,7].map(c=>num(r[c])).filter(x=>x!==null);
+  const td=document.getElementById('ub_'+i);if(!td)return;if(I.length<3){td.innerHTML='';return}
+  const av=(I[0]+I[1]+I[2])/3;const u=av?Math.max(...I.map(x=>Math.abs(x-av)))/av*100:0;
+  td.innerHTML=`<span class="z ${u<=5?'zA':u<=10?'zC':'zD'}">${u.toFixed(1)}</span>`});
+ if(k=='cal')S.t.cal.forEach((r,i)=>{const td=document.getElementById('er_'+i);if(!td)return;const p=num(r[2]),l=num(r[4]);let span=null;const m=String(r[1]||'').replace(/,/g,'.').match(/(-?[\d.]+)\s*[–-]\s*(-?[\d.]+)/);if(m)span=parseFloat(m[2])-parseFloat(m[1]);else span=num(r[1]);
+  if(p===null||l===null||!span){td.textContent='';return}const e=(l-p)/span*100;td.innerHTML=`<span class="z ${Math.abs(e)<=1?'zA':Math.abs(e)<=2?'zC':'zD'}">${e.toFixed(2)}</span>`});
+ if(k=='vib')S.t.vib.forEach((r,i)=>{const vs=r.slice(1,7).map(num).filter(x=>x!==null);const td=document.getElementById('zv_'+i);if(!td)return;
+  if(!vs.length){td.innerHTML='';return}const m=Math.max(...vs);const hr=/HR\d00/i.test(r[0]||'');const L=hr?[4.5,6.4,9.3]:[1.4,2.8,4.5];const z=m<=L[0]?'A':m<=L[1]?'B':m<=L[2]?'C':'D';td.innerHTML=`<span class="z z${z}">${z}</span>`});
+ if(k=='ter')S.t.ter.forEach((r,i)=>{const a=num(r[1]),b=num(r[2]);const d=document.getElementById('dt_'+i),s=document.getElementById('sv_'+i);if(!d)return;
+  if(a===null||b===null){d.textContent='';s.innerHTML='';return}const dt=a-b;d.textContent=dt.toFixed(1);
+  const[z,t]=dt<1?['A','Normal']:dt<=3?['B','Posible']:dt<=15?['C','Probable']:['D','Mayor'];s.innerHTML=`<span class="z z${z}">${t}</span>`});
+}
+function hid(){if(!S.t.hid)S.t.hid=DEF.hid.map(r=>[r[0],'',r[1],r[2]||'','']);
+ const b=document.querySelector('#thid tbody');
+ b.innerHTML=S.t.hid.map((r,i)=>`<tr><td>${esc(r[0])}</td>${[1,2,3,4].map(j=>`<td><input ${j==1?'inputmode="decimal"':''} data-r="${i}" data-c="${j}" value="${esc(r[j]||'')}"></td>`).join('')}</tr>`).join('');
+ b.querySelectorAll('input').forEach(e=>e.oninput=()=>{S.t.hid[e.dataset.r][e.dataset.c]=e.value;save();});}
+function addRow(k){const r=[];if(k=='cic'||k=='pun')r[0]=String(S.t[k].length+1);S.t[k].push(r);tb(k);save();}
+function delRow(k,i){if(!confirmar('¿Eliminar esta fila?'))return;S.t[k].splice(i,1);tb(k);save();}
+function confirmar(m){try{return window.confirm(m)}catch(e){return true}}
+
+function firmas(){const f=document.getElementById('firmas');
+ f.innerHTML=FIRMAS.map((n,i)=>{const d=S.f['fn'+i]||'',c=S.f['fc'+i]||'',fe=S.f['fd'+i]||'';
+  return `<div><b>${n}</b><input data-k="fn${i}" placeholder="Nombre" value="${esc(d)}"><input data-k="fc${i}" placeholder="Cargo / Empresa" value="${esc(c)}">
+  <div class="fl"><canvas id="sg${i}" width="600" height="84"></canvas></div><div class="lbl"><span>Firma</span><a onclick="borraFirma(${i})">borrar</a></div>
+  <input type="date" data-k="fd${i}" value="${esc(fe)}"></div>`}).join('');
+ FIRMAS.forEach((_,i)=>pad(i));bindFicha(f);}
+function pad(i){const cv=document.getElementById('sg'+i),cx=cv.getContext('2d');cx.lineWidth=3;cx.lineCap='round';cx.strokeStyle='#0a2a6b';
+ if(S.sig[i]){const im=new Image();im.onload=()=>cx.drawImage(im,0,0);im.src=S.sig[i];}
+ let dn=false;const p=e=>{const r=cv.getBoundingClientRect();return[(e.clientX-r.left)*cv.width/r.width,(e.clientY-r.top)*cv.height/r.height]};
+ cv.onpointerdown=e=>{dn=true;cv.setPointerCapture(e.pointerId);const[x,y]=p(e);cx.beginPath();cx.moveTo(x,y)};
+ cv.onpointermove=e=>{if(!dn)return;const[x,y]=p(e);cx.lineTo(x,y);cx.stroke()};
+ cv.onpointerup=cv.onpointercancel=()=>{if(!dn)return;dn=false;S.sig[i]=cv.toDataURL();save()};}
+function borraFirma(i){const cv=document.getElementById('sg'+i);cv.getContext('2d').clearRect(0,0,cv.width,cv.height);delete S.sig[i];save();}
+
+function bindFicha(root){root.querySelectorAll('[data-k]').forEach(e=>{const k=e.dataset.k;
+ if(e.type=='radio'){e.checked=S.f[k]==e.value;e.onchange=()=>{S.f[k]=e.value;save()};return}
+ if(S.f[k]!==undefined)e.value=S.f[k];e.oninput=e.onchange=()=>{S.f[k]=e.value;save();pie()};});}
+function resumen(){let tot=0,done=0,nc=0,n=0;const s=SECS[0];
+ const out=s.g.map(g=>{let t=0,d=0,x=0;g[1].forEach(()=>{n++;t++;const v=S.st[s.id+n];if(v)d++;if(v=='NC')x++;});
+  tot+=t;done+=d;nc+=x;const p=Math.round(100*d/t);
+  return `<div><b>${g[0].replace(/^1\.[A-Z]\s*/,'')}</b>${d}/${t} verificados${x?` · <span style="color:var(--nc)">${x} NO</span>`:''}<div class="bar2"><i style="width:${p}%"></i></div></div>`}).join('');
+ document.getElementById('res').innerHTML=out;
+ document.getElementById('prog').textContent=`${ESPNAME}: avance ${done}/${tot} · ${nc} no conformes · guardado automático en este dispositivo`;}
+function pie(){document.getElementById('fpie').textContent=`${S.f.codigo||''}  ·  ${S.f.fecha||''}`}
+function numerar(){let n=1;document.querySelectorAll('.sec').forEach(sec=>{if(sec.closest('#secs'))return;const sp=sec.querySelector('h2 .num');if(sp){n++;sp.textContent=n+'. '}})}
+function marcaVacios(){document.querySelectorAll('input[type=date],input[type=time]').forEach(i=>i.classList.toggle('vacio',!i.value))}
+window.addEventListener('beforeprint',marcaVacios);
+function imprimir(){marcaVacios();window.print()}
+function exportar(){const b=new Blob([JSON.stringify(S)],{type:'application/json'});const a=document.createElement('a');
+ a.href=URL.createObjectURL(b);a.download=`Respaldo_datos_0611-TK-1101_${typeof ESPCODE!=='undefined'?ESPCODE:''}_${S.f.fecha||'sin_fecha'}.json`;a.click();
+ try{alert('Se descargó un RESPALDO DE DATOS (.json).\n\nNo es el informe: sirve solo para volver a cargarlo en este formulario con «Cargar respaldo», en otro equipo o para continuar después.\n\nPara el informe use «Informe PDF / Imprimir» y elija «Guardar como PDF».')}catch(e){}}
+function importar(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{S=JSON.parse(r.result);save();init()}catch(e){alert('Archivo no válido')}};r.readAsText(f);}
+function limpiar(){if(!confirmar('¿Borrar todos los datos y comenzar un protocolo nuevo?'))return;S={f:{},st:{},ob:{},t:{},sig:{}};try{localStorage.removeItem(LS)}catch(e){}init();}
+function init(){render();bindFicha(document.querySelector('.ficha'));bindFicha(document.querySelector('.dict'));bindFicha(document.querySelector('.cod'));
+ bindFicha(document.querySelector('textarea[data-k=obs]').parentNode);
+ if(!S.f.fecha){const dd=new Date();S.f.fecha=new Date(dd-dd.getTimezoneOffset()*6e4).toISOString().slice(0,10);document.querySelector('[data-k=fecha]').value=S.f.fecha}
+ resumen();pie();}
+load();init();
+</script>
+
+
+</body></html>

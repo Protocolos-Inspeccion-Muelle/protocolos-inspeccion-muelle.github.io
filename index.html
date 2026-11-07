@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Protocolos Mantenimiento – Muelle</title>
+<style>
+:root{--teal:#0b6e74;--orange:#e8772e;--ink:#1d2327;--mut:#5f6b73;--line:#cfd6db;--bg:#f3f5f6}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
+.wrap{max-width:820px;margin:0 auto;padding:14px}
+.hdr{background:#fff;border:1.5px solid var(--ink);padding:14px 16px}
+.hdr b{color:var(--teal);letter-spacing:2px;font-size:18px}
+.hdr small{display:block;color:var(--mut);font-size:11px;letter-spacing:1px}
+.hdr h1{font-size:18px;margin:10px 0 0}
+.bar{height:4px;background:var(--orange);margin:6px 0 16px}
+.grp{background:#fff;border:1px solid var(--line);margin-bottom:14px}
+.grp h2{margin:0;background:var(--ink);color:#fff;font-size:14px;padding:9px 12px}
+.grp a{display:flex;align-items:center;gap:12px;padding:13px 12px;border-top:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:15px}
+.grp a:first-of-type{border-top:0}
+.grp a:active,.grp a:hover{background:#eef7f7}
+.grp a span.ic{width:34px;height:34px;border-radius:6px;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:13px;flex:none}
+.grp a small{display:block;color:var(--mut);font-size:12px;margin-top:2px}
+.nota{background:#fff;border:1px solid var(--line);border-left:4px solid var(--orange);padding:10px 12px;font-size:13px;line-height:1.45;margin-bottom:14px}
+#qrbox{display:flex;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);padding:12px;margin-bottom:14px;font-size:13px}
+#qr{width:132px;height:132px;flex:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hdr"><b>CENTINELA</b><small>MANTENIMIENTO MECÁNICO – MUELLE</small><h1>Protocolos de puesta en operación e inspección</h1></div>
+  <div class="bar"></div>
+
+  <div class="nota">Toque un protocolo para abrirlo. Los datos se guardan en <b>este teléfono / computador</b> mientras no se borren los datos del navegador. Para el informe use <b>«Informe PDF / Imprimir» → «Guardar como PDF»</b> y envíelo a quien corresponda.</div>
+
+  <div class="grp"><h2>Espesador 0611-TK-1101 y bombas de descarga 0611-PP-1101/1102</h2>
+    <a href="1_Espesador_0611-TK-1101/PEO_0611-TK-1101_1_Operaciones.html"><span class="ic">OPE</span><div>Operaciones<small>Condiciones, partida y registro horario</small></div></a>
+    <a href="1_Espesador_0611-TK-1101/PEO_0611-TK-1101_2_Mecanico.html"><span class="ic">MEC</span><div>Mantenimiento Mecánico<small>Rastras, accionamiento, HPU, bombas HR100</small></div></a>
+    <a href="1_Espesador_0611-TK-1101/PEO_0611-TK-1101_3_Instrumentacion.html"><span class="ic">INS</span><div>Instrumentación<small>Instrumentos, válvulas, calibración y lazos</small></div></a>
+    <a href="1_Espesador_0611-TK-1101/PEO_0611-TK-1101_4_Electrico.html"><span class="ic">ELE</span><div>Eléctrico<small>Tableros, CCM, mando y motores</small></div></a>
+    <a href="1_Espesador_0611-TK-1101/PEO_0611-TK-1101_5_MonCon.html"><span class="ic">MCO</span><div>Monitoreo de Condición<small>Vibraciones y termografía</small></div></a>
+  </div>
+
+  <div class="grp"><h2>Filtro 0621-FL-1101, bombas 0611-PP-1107/1108 y correa 0621-CV-1101</h2>
+    <a href="2_Filtro_0621-FL-1101/PEO_0621-FL-1101_1_Operaciones.html"><span class="ic">OPE</span><div>Operaciones<small>Secuencia Metso y registro de ciclos</small></div></a>
+    <a href="2_Filtro_0621-FL-1101/PEO_0621-FL-1101_2_Mecanico.html"><span class="ic">MEC</span><div>Mantenimiento Mecánico<small>Placas, telas, HPU, bombas HR200, correa</small></div></a>
+    <a href="2_Filtro_0621-FL-1101/PEO_0621-FL-1101_3_Instrumentacion.html"><span class="ic">INS</span><div>Instrumentación<small>Instrumentos, seguridades de correa, celdas de carga</small></div></a>
+    <a href="2_Filtro_0621-FL-1101/PEO_0621-FL-1101_4_Electrico.html"><span class="ic">ELE</span><div>Eléctrico<small>Tableros, CCM, mando y motores</small></div></a>
+    <a href="2_Filtro_0621-FL-1101/PEO_0621-FL-1101_5_MonCon.html"><span class="ic">MCO</span><div>Monitoreo de Condición<small>Vibraciones y termografía</small></div></a>
+  </div>
+
+  <div class="grp"><h2>Rutas semanales</h2>
+    <a href="3_Ruta_Polines/Ruta_Polines_Filtros_Larox.html"><span class="ic">POL</span><div>Lubricación y ultrasonido de polines<small>Filtros 621-FL-001 · 621-FL-002 · 0621-FL-1101</small></div></a>
+  </div>
+
+  <div id="qrbox" style="display:none"><canvas id="qr"></canvas><div><b>Compartir esta página</b><br>Escanee el código QR con la cámara del teléfono o comparta el enlace:<br><span id="url" style="word-break:break-all;color:var(--teal)"></span></div></div>
+</div>
+<script>
+(function(){if(!/^https?:/.test(location.protocol))return;var u=location.href.split('#')[0];document.getElementById('url').textContent=u;
+ var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js';
+ s.onload=function(){try{new QRious({element:document.getElementById('qr'),value:u,size:264});document.getElementById('qrbox').style.display='flex'}catch(e){}};document.head.appendChild(s)})();
+</script>
+</body>
+</html>
